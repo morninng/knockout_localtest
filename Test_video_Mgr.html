@@ -1,0 +1,66 @@
+<html>
+<head>
+
+<meta charset="utf-8">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+
+</head>
+<body>
+
+<div id="left_column">
+
+  <div id="speach_role_timer" data-bind="visible: speech_visible" style="display:none">a</div>
+   <div data-bind="text:speech_role" style="float:left"></div>
+   <div data-bind="text:speaker_name" style="float:left"></div>
+   <div data-bind="text:speech_time" style="float:right"></div>
+  </div>
+
+  <div data-bind="visible: normal_buttons">
+	<button data-bind="visible: complete_speech_button, event:{click:click_complete_speech}">Complete Speech</button>
+	<button data-bind="visible: poi_button, event:{click:click_poi}"> Poi</button>
+	<button data-bind="visible: finish_poi_button, event:{click:finish_poi}">Finish Poi</button>
+	<button data-bind="visible: finish_poi_bySpeaker_button, event:{click:finish_poi_bySpeaker}">Finish Poi</button>
+  </div>
+
+  <div data-bind="visible: start_speech">
+	<ul data-bind="foreach: role_name_array">
+	 <li>
+	   <div>
+	   　 	<button data-bind="click:$parent.click_speech_start, text:button_role_name"></button>
+	   <div>
+	  </li>
+	</ul> 
+  </div>
+
+  <div data-bind="visible: poi_candidate_visible">
+	<ul data-bind="foreach: poi_candidate_view_array"　style="list-style-type:none;">
+	 <li style="clear:left">
+	   <div style="padding:2px">
+	     <div class="profile_container" style="float:left">
+	     	<img style="float:left; max-width:50px" data-bind="attr: {src: img_url}">
+	   　 	<div style="float:left" data-bind = "text:name" ></div>
+	     </div>
+		<button data-bind="visible: PoiTake_button_visible, click:$parent.take_poi" style = "display:none; float:left"> take poi</button>
+	   　 	<button data-bind="visible: cancel_button_visible" style = "display:none; float:left">cancel poi</button>
+	   　 
+	   </div>
+	  </li>
+	</ul>
+  </div>
+</div>
+
+
+
+<script type="text/javascript" src="./Test_video_Mgr.js"></script>
+
+<button onclick="view_model.updateModel()">update</button>
+
+
+<button onclick="ADD_POI_CANDIDATE()">add_candidate</button>
+<button onclick="REMOVE_POI_CANDIDATE()">remove_candidate</button>
+
+<button onclick="change_candidate_visible_flag()">candidate visible switch</button>
+
+
+</body>
+</html>
