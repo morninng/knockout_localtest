@@ -1,0 +1,139 @@
+<html>
+
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./Debate.css">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+
+<body>
+
+	<div id = "event-title">
+		<div id = "event_left">a1</div>
+		<div id = "event_right">b2</div>
+	</div>
+
+  <div id="container_main">
+	<div id="container_left_pain" data-bind="css: left_column_css_class">
+		<div id="speech_status">c3</div>
+		<div id="speech_time">d4</div>
+	</div>
+
+<!-- ko if:center_column_existence -->
+
+	<div id="container_center_pain" data-bind="css: center_column_css_class">
+
+		<div id="group_hangout_button"></div>
+		<div id="chat_window" align="center">
+			<textarea style="width:98%; margin-top:5px" placeholder="message to partner"></textarea>
+			<div align="right"><button style="margin:3px; margin-right:10px">send</button></div>
+			<div style="width:98%; height:500px; border:double; margin:2px; background-color: #FFFFFF" align="left" > message window
+			</div>
+		</div>
+	</div>
+
+<!-- /ko -->
+	<div id="container_right_pain" data-bind="css: right_column_css_class">
+		<div id="right-top-pain">f</div>  
+		<div id="right-middle-pain">g</div>  
+	</div>
+  </div>
+
+
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+
+
+<script type="text/javascript" src="./MainContainerAppViewModel.js"></script>
+<script type="text/javascript" src="./AppMgr.js"></script>
+<script type="text/javascript" src="./ParticipantMgr.js"></script>
+<script type="text/javascript" src="./ParticipantMgr.js"></script>
+<script type="text/javascript" src="./Participant_TableView.js"></script>
+<script type="text/javascript" src="./UserStatus_view.js"></script>
+<script type="text/javascript" src="./Video_Mgr.js"></script>
+
+
+
+<script type="text/javascript">
+	var container_viewmodel = new ContainerMainAppViewModel();
+	ko.applyBindings(container_viewmodel);
+//	var mixidea_app_obj = new Mixidea_Debate_app();
+
+</script>
+
+
+
+
+<script type="text/javascript">
+
+	function button_click(){
+	  var particpant_array = mixidea_app_obj.participant_manager_object.get_role_array("hangout_XXX2");
+	  console.log(particpant_array);
+	}
+	function button_click2(){
+	  var name = mixidea_app_obj.participant_manager_object.getUserFirstName("ReplyPM");
+	  console.log(name);
+	  var full_name = mixidea_app_obj.participant_manager_object.getUserFullName("ReplyPM");
+	  console.log(full_name );
+
+	  var pict_src = mixidea_app_obj.participant_manager_object.getUserPictureSrc("ReplyPM");
+	  console.log(pict_src ); 
+	}
+	function check_isdebate_yourself(){
+		var check = mixidea_app_obj.participant_manager_object.isDebater_yourself();
+		console.log(check);
+	}
+	function click_button4(){
+		var myrole_array = mixidea_app_obj.participant_manager_object.get_own_role_array();
+		console.log(myrole_array);
+	}
+	function click_button5(){
+		var ispartner_flag = mixidea_app_obj.participant_manager_object.isYourPartner("hangout_XXX4");
+		console.log(ispartner_flag);
+	}
+	function button_click(){
+	  var particpant_array = mixidea_app_obj.participant_manager_object.get_role_array("hangout_XXX2");
+	  console.log(particpant_array);
+	}
+	function button_click2(){
+	  var name = mixidea_app_obj.participant_manager_object.getUserFirstName("ReplyPM");
+	  console.log(name);
+	  var full_name = mixidea_app_obj.participant_manager_object.getUserFullName("ReplyPM");
+	  console.log(full_name );
+
+	  var pict_src = mixidea_app_obj.participant_manager_object.getUserPictureSrc("ReplyPM");
+	  console.log(pict_src );  
+	}
+	function check_isdebate_yourself(){
+		var check = mixidea_app_obj.participant_manager_object.isDebater_yourself();
+		console.log(check);
+	}
+	function click_button4(){
+		var myrole_array = mixidea_app_obj.participant_manager_object.get_own_role_array();
+		console.log(myrole_array);
+	}
+	function click_button5(){
+		var ispartner_flag = mixidea_app_obj.participant_manager_object.isYourPartner("hangout_XXX4");
+		console.log(ispartner_flag);
+	}
+
+</script>
+
+
+	<button onclick = "button_click()">click button</button>
+	<br>
+	<button onclick = "button_click2()">click button2</button>
+	<br>
+	<button onclick = "check_isdebate_yourself()">click button3</button>
+	<br>
+	<button onclick = "click_button4()">click button4</button>
+	<br>
+	<button onclick = "click_button5()">click button5</button>
+
+
+</body>
+</html>

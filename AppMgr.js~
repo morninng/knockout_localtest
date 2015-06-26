@@ -1,22 +1,3 @@
-<html>
-<head></head>
-<body>
-
-
-<script type="text/javascript" src="./TestParticipantMgr.js"></script>
-
-
-
-<!-- サーバにたまっているのは次のようなデータ
- {"DeptyPrimeMinister":"tQDJHWFq27","PrimeMinister":"tQDJHWFq27"}
- →このデータを、かきのようなデータに変換してから返す
- 開発順序として、まず上記のデータをそのままいれて、APIで定義したデータを取得できるか試してみる。
- できないようであれば、データ形式とかAPIとかを見直す。
--->
-
-<script>
-
-var mixidea_app_obj = new Mixidea_Debate_app();
 
 
 function Mixidea_Debate_app(){
@@ -25,8 +6,6 @@ function Mixidea_Debate_app(){
 	self.own_parse_id="XXXX";
 	self.game_id="YYYYY";
 	self.own_hangoutid = "ZZZZZ";
-
-
 
 	var game_obj = new Object();
 	game_obj = {
@@ -68,12 +47,8 @@ function Mixidea_Debate_app(){
 	//participant changed eventが走るときに毎回呼び出す。
 
 	self.participant_manager_object.update_participants();
-
-	
-
 }
 
-</script>
 
 
 <script type="text/javascript">
@@ -90,8 +65,7 @@ function button_click2(){
   console.log(full_name );
 
   var pict_src = mixidea_app_obj.participant_manager_object.getUserPictureSrc("ReplyPM");
-  console.log(pict_src );
-  
+  console.log(pict_src );  
 }
 
 function check_isdebate_yourself(){
@@ -99,17 +73,12 @@ function check_isdebate_yourself(){
 	console.log(check);
 }
 
-
-
 function click_button4(){
 	var myrole_array = mixidea_app_obj.participant_manager_object.get_own_role_array();
 	console.log(myrole_array);
-
 }
 
-
 function click_button5(){
-
 	var ispartner_flag = mixidea_app_obj.participant_manager_object.isYourPartner("hangout_XXX4");
 	console.log(ispartner_flag);
 }
@@ -117,17 +86,3 @@ function click_button5(){
  
 
 </script>
-
-<button onclick = "button_click()">click button</button>
-<br>
-<button onclick = "button_click2()">click button2</button>
-<br>
-<button onclick = "check_isdebate_yourself()">click button3</button>
-<br>
-<button onclick = "click_button4()">click button4</button>
-<br>
-<button onclick = "click_button5()">click button5</button>
-
-
-</body>
-</html>

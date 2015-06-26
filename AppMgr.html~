@@ -1,0 +1,168 @@
+<html>
+
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./knockout_practice.css">
+</head>
+
+<body>
+
+	<div id = "event-title">
+		<div id = "event_left">a</div>
+		<div id = "event_right">b</div>
+	</div>
+
+  <div id="container_main">
+
+	<div id="container_left_pain" data-bind="css: left_column_css_class">
+		<div id="speech_status">c</div>
+		<div id="speech_time">d</div>
+	</div>
+
+<!-- ko if:center_column_existence -->
+
+	<div id="container_center_pain" data-bind="css: center_column_css_class">
+		<div id="chat_window">e</div>
+	</div>
+
+<!-- /ko -->
+
+
+	<div id="container_right_pain" data-bind="css: right_column_css_class">
+		<div id="participant_screen">f</div>  
+		<div id="argument_screen">g</div>  
+	</div>
+
+  </div>
+
+
+
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+<script type="text/javascript" src="./TestParticipantMgr.js"></script>
+
+
+
+
+
+<script>
+
+var mixidea_app_obj = new Mixidea_Debate_app();
+
+
+function Mixidea_Debate_app(){
+
+	var self = this;
+	self.own_parse_id="XXXX";
+	self.game_id="YYYYY";
+	self.own_hangoutid = "ZZZZZ";
+
+
+
+	var game_obj = new Object();
+	game_obj = {
+	game_style:"NorthAmerica",
+	debater_data_array:[
+		{role:"PrimeMinister",parse_id:"tQDJHWFq27",first_name:"Yuta",last_name:"Moriyama",pict_src:"http://aaa.com"},
+		{role:"LeaderOpposition", parse_id:"parse_XXX2",first_name:"aaa",last_name:"AAA",pict_src:"http://aaa.jpeg"},
+		{role:"ReplyPM", parse_id:"XXXX",first_name:"Yuta",last_name:"Moriyama",pict_src:"http://aaa.com"},
+		{role:"LOReply", parse_id:"parse_XXX2",first_name:"ccc",last_name:"CCC",pict_src:"http://eee.jpg"}
+		],
+	audience_data_array:
+		[{parse_id:"ZZZZ",first_name:"parse_XXX3",last_name:"CCC",pict_src:"http://eee.jpg"},
+		 {parse_id:"ZZZZ",first_name:"ccc",last_name:"CCC",pict_src:"http://eee.jpg"}
+		],
+	hangout_ids:
+		{
+		 main:"XXXX",
+		 Gov:"YYYY",
+		 Opp:"ZZZ"
+		}
+	};
+
+	 var own_parse_id = "tQDJHWFq27";
+	 self.participant_manager_object = new ParticipantMgr(game_obj, own_parse_id, self.own_hangoutid);
+
+
+	// hangout statusで受け取るJSONコード
+
+	var parse_hangout_mapping = [ 
+		         {parse_id:"parse_XXX1", hangout_id:"hangout_XXX1"},
+		         {parse_id:"parse_XXX2", hangout_id:"hangout_XXX2"},
+		         {parse_id:"parse_XXX3", hangout_id:"hangout_XXX3"},
+		         {parse_id:"XXXX", hangout_id:"ZZZZZ"},
+		         {parse_id:"tQDJHWFq27", hangout_id:"hangout_XXX4"}
+		         ];
+
+	self.participant_manager_object.set_parseid_hangoutid_mapping(parse_hangout_mapping );
+
+	//participant changed eventが走るときに毎回呼び出す。
+
+	self.participant_manager_object.update_participants();
+
+	
+
+}
+
+</script>
+
+
+<script type="text/javascript">
+
+function button_click(){
+  var particpant_array = mixidea_app_obj.participant_manager_object.get_role_array("hangout_XXX2");
+  console.log(particpant_array);
+}
+
+function button_click2(){
+  var name = mixidea_app_obj.participant_manager_object.getUserFirstName("ReplyPM");
+  console.log(name);
+  var full_name = mixidea_app_obj.participant_manager_object.getUserFullName("ReplyPM");
+  console.log(full_name );
+
+  var pict_src = mixidea_app_obj.participant_manager_object.getUserPictureSrc("ReplyPM");
+  console.log(pict_src );
+  
+}
+
+function check_isdebate_yourself(){
+	var check = mixidea_app_obj.participant_manager_object.isDebater_yourself();
+	console.log(check);
+}
+
+
+
+function click_button4(){
+	var myrole_array = mixidea_app_obj.participant_manager_object.get_own_role_array();
+	console.log(myrole_array);
+
+}
+
+
+function click_button5(){
+
+	var ispartner_flag = mixidea_app_obj.participant_manager_object.isYourPartner("hangout_XXX4");
+	console.log(ispartner_flag);
+}
+ 
+ 
+
+</script>
+
+<button onclick = "button_click()">click button</button>
+<br>
+<button onclick = "button_click2()">click button2</button>
+<br>
+<button onclick = "check_isdebate_yourself()">click button3</button>
+<br>
+<button onclick = "click_button4()">click button4</button>
+<br>
+<button onclick = "click_button5()">click button5</button>
+
+
+</body>
+</html>
