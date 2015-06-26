@@ -26,7 +26,5 @@ ContainerMainAppViewModel.prototype.construct_three_column = function(){
 	self.center_column_existence(true);
 }
 
- var container_modelview = new ContainerMainAppViewModel();
-ko.applyBindings(container_modelview);
 
 

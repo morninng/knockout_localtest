@@ -35,8 +35,8 @@
 
 <!-- /ko -->
 	<div id="container_right_pain" data-bind="css: right_column_css_class">
-		<div id="right-top-pain">f</div>  
-		<div id="right-middle-pain">g</div>  
+		<div id="right-top-pain">f</div>
+		<div id="right-middle-pain">g</div>
 	</div>
   </div>
 
@@ -48,10 +48,9 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
 
 <script type="text/javascript" src="./MainContainerAppViewModel.js"></script>
-<!--
 <script type="text/javascript" src="./AppMgr.js"></script>
 <script type="text/javascript" src="./ParticipantMgr.js"></script>
-<script type="text/javascript" src="./ParticipantMgr.js"></script>
+<!--
 <script type="text/javascript" src="./Participant_TableView.js"></script>
 <script type="text/javascript" src="./UserStatus_view.js"></script>
 <script type="text/javascript" src="./Video_Mgr.js"></script>
@@ -60,7 +59,9 @@
 
 <script type="text/javascript">
 
-//	var mixidea_app_obj = new Mixidea_Debate_app();
+ var container_modelview = new ContainerMainAppViewModel();
+ ko.applyBindings(container_modelview);
+ var appmgr = new AppMgr();
 
 </script>
 

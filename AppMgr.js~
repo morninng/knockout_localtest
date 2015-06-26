@@ -1,8 +1,8 @@
 
 
-function Mixidea_Debate_app(){
+function AppMgr() {
 
-	var self = this;
+  	var self = this;
 	self.own_parse_id="XXXX";
 	self.game_id="YYYYY";
 	self.own_hangoutid = "ZZZZZ";
@@ -49,40 +49,3 @@ function Mixidea_Debate_app(){
 	self.participant_manager_object.update_participants();
 }
 
-
-
-<script type="text/javascript">
-
-function button_click(){
-  var particpant_array = mixidea_app_obj.participant_manager_object.get_role_array("hangout_XXX2");
-  console.log(particpant_array);
-}
-
-function button_click2(){
-  var name = mixidea_app_obj.participant_manager_object.getUserFirstName("ReplyPM");
-  console.log(name);
-  var full_name = mixidea_app_obj.participant_manager_object.getUserFullName("ReplyPM");
-  console.log(full_name );
-
-  var pict_src = mixidea_app_obj.participant_manager_object.getUserPictureSrc("ReplyPM");
-  console.log(pict_src );  
-}
-
-function check_isdebate_yourself(){
-	var check = mixidea_app_obj.participant_manager_object.isDebater_yourself();
-	console.log(check);
-}
-
-function click_button4(){
-	var myrole_array = mixidea_app_obj.participant_manager_object.get_own_role_array();
-	console.log(myrole_array);
-}
-
-function click_button5(){
-	var ispartner_flag = mixidea_app_obj.participant_manager_object.isYourPartner("hangout_XXX4");
-	console.log(ispartner_flag);
-}
- 
- 
-
-</script>

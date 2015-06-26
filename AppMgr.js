@@ -1,8 +1,8 @@
 
 
-function Mixidea_Debate_app(){
+function AppMgr() {
 
-	var self = this;
+  	var self = this;
 	self.own_parse_id="XXXX";
 	self.game_id="YYYYY";
 	self.own_hangoutid = "ZZZZZ";
