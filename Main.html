@@ -48,15 +48,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
 <script type="text/template" data-template="video_area_template">
 
   <div id="speach_role_timer" data-bind="visible: speech_visible" style="display:none">a</div>
@@ -205,20 +196,23 @@
 
 
 
-
-
-
-
-
-
-
 <script type="text/javascript">
 
-	function button_click(){
+	function change_column(){
+
+		var current_column = container_modelview.left_column_css_class();
+		if(current_column == "three_Column_left_pain"){
+			container_modelview.construct_two_column();
+		}else{
+			container_modelview.construct_three_column();
+		}
+	}
+
+	function get_role(){
 	  var particpant_array = appmgr.participant_manager_object.get_role_array("hangout_XXX2");
 	  console.log(particpant_array);
 	}
-	function button_click2(){
+	function getUserFullName(){
 	  var name = appmgr.participant_manager_object.getUserFirstName("ReplyPM");
 	  console.log(name);
 	  var full_name = appmgr.participant_manager_object.getUserFullName("ReplyPM");
@@ -231,52 +225,29 @@
 		var check = appmgr.participant_manager_object.isDebater_yourself();
 		console.log(check);
 	}
-	function click_button4(){
+	function get_own_role_array(){
 		var myrole_array = appmgr.participant_manager_object.get_own_role_array();
 		console.log(myrole_array);
 	}
-	function click_button5(){
-		var ispartner_flag = appmgr.participant_manager_object.isYourPartner("hangout_XXX4");
-		console.log(ispartner_flag);
-	}
-	function button_click(){
-	  var particpant_array = appmgr.participant_manager_object.get_role_array("hangout_XXX2");
-	  console.log(particpant_array);
-	}
-	function button_click2(){
-	  var name = appmgr.participant_manager_object.getUserFirstName("ReplyPM");
-	  console.log(name);
-	  var full_name = appmgr.participant_manager_object.getUserFullName("ReplyPM");
-	  console.log(full_name );
 
-	  var pict_src = appmgr.participant_manager_object.getUserPictureSrc("ReplyPM");
-	  console.log(pict_src );  
-	}
-	function check_isdebate_yourself(){
-		var check = appmgr.participant_manager_object.isDebater_yourself();
-		console.log(check);
-	}
-	function click_button4(){
-		var myrole_array = appmgr.participant_manager_object.get_own_role_array();
-		console.log(myrole_array);
-	}
-	function click_button5(){
+	function isYourPartner(){
 		var ispartner_flag = appmgr.participant_manager_object.isYourPartner("hangout_XXX4");
 		console.log(ispartner_flag);
 	}
+
 
 </script>
 
 
-	<button onclick = "button_click()">click button</button>
+	<button onclick = "change_column()">aaa</button>
+	<button onclick = "get_role()">get_role</button>
 	<br>
-	<button onclick = "button_click2()">click button2</button>
+	<button onclick = "getUserFullName()">getUserFullName</button>
 	<br>
-	<button onclick = "check_isdebate_yourself()">click button3</button>
+	<button onclick = "check_isdebate_yourself()">check_isdebate_yourself</button>
 	<br>
-	<button onclick = "click_button4()">click button4</button>
+	<button onclick = "get_own_role_array()">get_own_role_array</button>
 	<br>
-	<button onclick = "click_button5()">click button5</button>
 
 
 </body>
