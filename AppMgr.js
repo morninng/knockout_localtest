@@ -45,7 +45,26 @@ function AppMgr() {
 	self.participant_manager_object.set_parseid_hangoutid_mapping(parse_hangout_mapping );
 
 	//participant changed eventが走るときに毎回呼び出す。
+	self.participant_table = new ParticipantTableVM();
 
-	self.participant_manager_object.update_participants();
+
+
+
+
+
+
+  var Video_html_Template = _.template($('[data-template="video_area_template"]').html());
+    var video_element = $("#video_area");
+    var Video_html_text = Video_html_Template();
+    video_element.html(Video_html_text);
+
+    var video_view_model = new VideoViewModel();
+    var element = document.getElementById('video_area');
+    ko.applyBindings(video_view_model, element);
+
+
+
+
+
 }
 

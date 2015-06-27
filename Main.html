@@ -1,10 +1,14 @@
 <html>
 
 <head>
+	 <meta charset="utf-8">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="./Debate.css">
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+
 </head>
 
 <body>
@@ -16,14 +20,13 @@
 
   <div id="container_main">
 	<div id="container_left_pain" data-bind="css: left_column_css_class">
-		<div id="speech_status">c3</div>
-		<div id="speech_time">d4</div>
+	   <div id="video_area">
+	   </div>
 	</div>
 
 <!-- ko if:center_column_existence -->
 
 	<div id="container_center_pain" data-bind="css: center_column_css_class">
-
 		<div id="group_hangout_button"></div>
 		<div id="chat_window" align="center">
 			<textarea style="width:98%; margin-top:5px" placeholder="message to partner"></textarea>
@@ -35,7 +38,7 @@
 
 <!-- /ko -->
 	<div id="container_right_pain" data-bind="css: right_column_css_class">
-		<div id="right-top-pain">f</div>
+		<div id="right-top-pain"><div id="participant_table"></div></div>
 		<div id="right-middle-pain">g</div>
 	</div>
   </div>
@@ -44,17 +47,152 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+<script type="text/template" data-template="video_area_template">
+
+  <div id="speach_role_timer" data-bind="visible: speech_visible" style="display:none">a</div>
+  <div data-bind="text:speech_role" style="float:left"></div>
+  <div data-bind="text:speaker_name" style="float:left"></div>
+  <div data-bind="text:speech_time" style="float:right"></div>
+  <div data-bind="visible: normal_buttons">
+	<button data-bind="visible: complete_speech_button, event:{click:click_complete_speech}">Complete Speech</button>
+	<button data-bind="visible: poi_button, event:{click:click_poi}"> Poi</button>
+	<button data-bind="visible: finish_poi_button, event:{click:finish_poi}">Finish Poi</button>
+	<button data-bind="visible: finish_poi_bySpeaker_button, event:{click:finish_poi_bySpeaker}">Finish Poi</button>
+  </div>
+  <div data-bind="visible: start_speech">
+	<ul data-bind="foreach: role_name_array">
+	 <li>
+	   <div>
+	   　 	<button data-bind="click:$parent.click_speech_start, text:button_role_name"></button>
+	   <div>
+	  </li>
+	</ul> 
+  </div>
+  <div data-bind="visible: poi_candidate_visible">
+	<ul data-bind="foreach: poi_candidate_view_array"　style="list-style-type:none;">
+	  <li style="clear:left">
+	   <div style="padding:2px">
+	      <div class="profile_container" style="float:left">
+	     	 <img style="float:left; max-width:50px" data-bind="attr: {src: img_url}">
+	   　 	 <div style="float:left" data-bind = "text:name" ></div>
+	      </div>
+		  <button data-bind="visible: PoiTake_button_visible, click:$parent.take_poi" style = "display:none; float:left"> take poi</button>
+	   　   <button data-bind="visible: cancel_button_visible" style = "display:none; float:left">cancel poi</button> 
+	   </div>
+	  </li>
+	</ul>
+  </div>
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/template" data-template="NA_Template">
+  <table class='table table-bordered'>
+   <thead><tr><th>Government</th><th>Opposition</th></tr></thead>
+   <tbody>
+   <tr><td><div id='PM_Container' data-bind="template: {name: 'user_status_template'}"></div></td>
+   <td><div id='LO_Container' data-bind="template: {name: 'user_status_template'}"></div></td></tr>
+   <tr><td><div id='MG_Container' data-bind="template: {name: 'user_status_template'}"></div></td>
+   <td><div id='MO_Container'  data-bind="template: {name: 'user_status_template'}"></div></td></tr>
+   <tr><td><div id='PMR_Container'  data-bind="template: {name: 'user_status_template'}"></div></td>
+   <td><div id='LOR_Container'  data-bind="template: {name: 'user_status_template'}"></div></td></tr>
+   </tbody>
+  </table>
+  <div id="Audience"></div>
+</script>
+
+
+<script type="text/template" data-template="Asian_Template">
+  <table class='table table-bordered'>
+   <thead><tr><th>Proposition</th><th>Opposition</th></tr></thead>
+   <tbody>
+   <tr><td><div id='PM_Container' data-bind="template: {name: 'user_status_template'}"></div></td>
+       <td><div id='LO_Container' data-bind="template: {name: 'user_status_template'}"></div></td></tr>
+   <tr><td><div id='DPM_Container' data-bind="template: {name: 'user_status_template'}"></div></td>
+       <td><div id='DLO_Container' data-bind="template: {name: 'user_status_template'}"></div></td></tr>
+   <tr><td><div id='GW_Container' data-bind="template: {name: 'user_status_template'}"></div></td>
+        <td><div id='OW_Container' data-bind="template: {name: 'user_status_template'}"></div></td></tr>
+   <tr><td><div id='GR_Container'  data-bind="template: {name: 'user_status_template'}"></div></td>
+       <td><div id='OR_Container'  data-bind="template: {name: 'user_status_template'}"></div></td></tr>
+   </tbody>
+  </table>
+  <div id="Audience"></div>
+</script>
+
+
+<script type="text/template" data-template="BP_Template">
+  <table class='table table-bordered'>
+   <thead><tr><th>OpeningGovernment</th><th>OpeningOpposition</th></tr></thead>
+   <tbody>
+   <tr><td><div id='PM_Container'></div></td><td><div id='LO_Container'></div></td></tr>
+   <tr><td><div id='DPM_Container'></div></td><td><div id='DLO_Container'></div></td></tr>
+   </tbody>
+   <thead><tr><th>ClosintGovernment</th><th>ClosingOpposition</th></tr></thead>
+   <tbody>
+   <tr><td><div id='MG_Container'></div></td><td><div id='MO_Container'></div></td></tr>
+   <tr><td><div id='GW_Container'></div></td><td><div id='OW_Container'></div></td></tr>
+   </tbody>
+  </table>
+  <div id="Audience"></div>
+</script>
+
+
+
+
+
+<script type="text/html" id="user_status_template">
+     <div data-bind="css: user_status_css">
+        <img style="max-width:50px; float:left" data-bind="attr: {src: pict_src}">
+        <div style="float:right; line-height: 1px">
+         <p data-bind ="text:role"></p>
+         <p data-bind ="text:user_name"></p>
+        </div>
+        <div style="clear:both" align="center" data-bind = "visible:enable_change">
+          <button data-bind = "visible: decline_visible, event:{click:decline}">decline</button>
+          <button data-bind = "visible: join_visible, event:{click:join}">join</button>
+        </div>
+     </div>
+</script>
+
+
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
 
+<script type="text/javascript" src="./Video_Mgr.js"></script>
 <script type="text/javascript" src="./MainContainerAppViewModel.js"></script>
 <script type="text/javascript" src="./AppMgr.js"></script>
 <script type="text/javascript" src="./ParticipantMgr.js"></script>
-<!--
 <script type="text/javascript" src="./Participant_TableView.js"></script>
 <script type="text/javascript" src="./UserStatus_view.js"></script>
-<script type="text/javascript" src="./Video_Mgr.js"></script>
--->
+
+
 
 
 <script type="text/javascript">
@@ -68,56 +206,62 @@
 
 
 
+
+
+
+
+
+
 <script type="text/javascript">
 
 	function button_click(){
-	  var particpant_array = mixidea_app_obj.participant_manager_object.get_role_array("hangout_XXX2");
+	  var particpant_array = appmgr.participant_manager_object.get_role_array("hangout_XXX2");
 	  console.log(particpant_array);
 	}
 	function button_click2(){
-	  var name = mixidea_app_obj.participant_manager_object.getUserFirstName("ReplyPM");
+	  var name = appmgr.participant_manager_object.getUserFirstName("ReplyPM");
 	  console.log(name);
-	  var full_name = mixidea_app_obj.participant_manager_object.getUserFullName("ReplyPM");
+	  var full_name = appmgr.participant_manager_object.getUserFullName("ReplyPM");
 	  console.log(full_name );
 
-	  var pict_src = mixidea_app_obj.participant_manager_object.getUserPictureSrc("ReplyPM");
+	  var pict_src = appmgr.participant_manager_object.getUserPictureSrc("ReplyPM");
 	  console.log(pict_src ); 
 	}
 	function check_isdebate_yourself(){
-		var check = mixidea_app_obj.participant_manager_object.isDebater_yourself();
+		var check = appmgr.participant_manager_object.isDebater_yourself();
 		console.log(check);
 	}
 	function click_button4(){
-		var myrole_array = mixidea_app_obj.participant_manager_object.get_own_role_array();
+		var myrole_array = appmgr.participant_manager_object.get_own_role_array();
 		console.log(myrole_array);
 	}
 	function click_button5(){
-		var ispartner_flag = mixidea_app_obj.participant_manager_object.isYourPartner("hangout_XXX4");
+		var ispartner_flag = appmgr.participant_manager_object.isYourPartner("hangout_XXX4");
 		console.log(ispartner_flag);
 	}
 	function button_click(){
-	  var particpant_array = mixidea_app_obj.participant_manager_object.get_role_array("hangout_XXX2");
+	  var particpant_array = appmgr.participant_manager_object.get_role_array("hangout_XXX2");
 	  console.log(particpant_array);
 	}
 	function button_click2(){
-	  var name = mixidea_app_obj.participant_manager_object.getUserFirstName("ReplyPM");
+	  var name = appmgr.participant_manager_object.getUserFirstName("ReplyPM");
 	  console.log(name);
-	  var full_name = mixidea_app_obj.participant_manager_object.getUserFullName("ReplyPM");
+	  var full_name = appmgr.participant_manager_object.getUserFullName("ReplyPM");
 	  console.log(full_name );
 
-	  var pict_src = mixidea_app_obj.participant_manager_object.getUserPictureSrc("ReplyPM");
+	  var pict_src = appmgr.participant_manager_object.getUserPictureSrc("ReplyPM");
 	  console.log(pict_src );  
 	}
 	function check_isdebate_yourself(){
-		var check = mixidea_app_obj.participant_manager_object.isDebater_yourself();
+		var check = appmgr.participant_manager_object.isDebater_yourself();
 		console.log(check);
 	}
 	function click_button4(){
-		var myrole_array = mixidea_app_obj.participant_manager_object.get_own_role_array();
+		var myrole_array = appmgr.participant_manager_object.get_own_role_array();
 		console.log(myrole_array);
 	}
 	function click_button5(){
-		var ispartner_flag = mixidea_app_obj.participant_manager_object.isYourPartner("hangout_XXX4");
+		var ispartner_flag = appmgr.participant_manager_object.isYourPartner("hangout_XXX4");
 		console.log(ispartner_flag);
 	}
 

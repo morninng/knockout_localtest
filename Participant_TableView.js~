@@ -93,4 +93,3 @@ ParticipantTableVM.prototype.CreateTableTemplate = function(game_style){
 }
 
 
-
