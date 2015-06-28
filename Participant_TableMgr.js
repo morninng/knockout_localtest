@@ -1,8 +1,7 @@
 
-function ParticipantTableVM(){
+function ParticipantTableMgr(game_style){
+
 	var self = this;
-	
-	var game_style = "NA";
 	
 	self.CreateTableTemplate(game_style);
 	self.create_rolename_array(game_style);	
@@ -10,27 +9,27 @@ function ParticipantTableVM(){
 		self.CreateUserObj(self.role_array[i], self.container_array[i]);
 		self.UserObj_setData(self.role_array[i]);
 	}
+
 }
 
-ParticipantTableVM.prototype.CreateUserObj = function(role_name, container_name){
 
+ParticipantTableMgr.prototype.CreateUserObj = function(role_name, container_name){
 	var self = this;
-	eval("self.user_obj_" + role_name + " = new user_status_view();" );
+	eval("self.user_obj_" + role_name + " = new user_status_VM();" );
 	eval("ko.applyBindings( self.user_obj_" + role_name + " , document.getElementById('" + container_name + "'));" );
 }
 
-ParticipantTableVM.prototype.UserObj_setData = function(role_name){
+
+ParticipantTableMgr.prototype.UserObj_setData = function(role_name){
 
 	var self = this;
-	var name = "Yuta";
+	var name = appmgr.participant_manager_object.getUserFirstName(role_name);
 	var login_status = "login";
 	var parse_id = "XXXX";
-	var pict_src = "./download.jpg";
+	var pict_src = appmgr.participant_manager_object.getUserPictureSrc(role_name);
 	var decline_status = true;
 	var join_status = true;
 	var enable_change_status = true;
-	
-	
 	
 	eval("self.user_obj_" + role_name + ".set_name('" + name + "');" );
 	eval("self.user_obj_" + role_name + ".set_role_name('" + role_name + "');" );
@@ -45,11 +44,11 @@ ParticipantTableVM.prototype.UserObj_setData = function(role_name){
 
 
 
-ParticipantTableVM.prototype.create_rolename_array = function(game_style){
+ParticipantTableMgr.prototype.create_rolename_array = function(game_style){
 	
 	var self = this;
 	switch(game_style){
-	  case 'NA':
+	  case 'NorthAmerica':
 		self.role_array = ["PrimeMinister","LeaderOpposition","MemberGovernment","MemberOpposition","ReplyPM","LOReply"];
 		self.container_array = ["PM_Container","LO_Container","MG_Container","MO_Container","PMR_Container","LOR_Container"];
 		break;
@@ -69,12 +68,12 @@ ParticipantTableVM.prototype.create_rolename_array = function(game_style){
 	
 }
 
-ParticipantTableVM.prototype.CreateTableTemplate = function(game_style){
+ParticipantTableMgr.prototype.CreateTableTemplate = function(game_style){
 
 	var participant_table_element = $("#participant_table" );
 
 	switch(game_style){
-	  case 'NA':
+	  case 'NorthAmerica':
 		NA_html_Template = _.template($('[data-template="NA_Template"]').html());
 		var NA_html_text = NA_html_Template();
 		participant_table_element.html(NA_html_text);

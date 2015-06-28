@@ -2,12 +2,7 @@
 
   var self = this;
 
-/*
-  var video_element = $("#video_area" );
-  video_html_Template = _.template($('[data-template="Video_View_Template"]').html());
-  var video_html_text = video_html_Template();
-  video_element.html(video_html_text);
-*/
+
 
   self.speech_visible = ko.observable(false);
   self.speech_role = ko.observable(); 
@@ -43,6 +38,17 @@
   console.log(in_name);
 
  }
+
+
+ VideoViewModel.prototype.show_start_speeh_button = function(){
+
+  self.start_speech(true);
+
+     app_mgr.participant.get_role_array();
+
+
+ }
+
 
  VideoViewModel.prototype.remove_candidate = function(in_hangout_id){
   

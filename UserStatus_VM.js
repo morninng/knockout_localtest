@@ -1,5 +1,5 @@
 
-function user_status_view(){
+function user_status_VM(){
   var self = this;
   self.role = ko.observable();
   self.user_name = ko.observable();
@@ -12,19 +12,19 @@ function user_status_view(){
   
 }
 
-user_status_view.prototype.set_name = function(in_name){
+user_status_VM.prototype.set_name = function(in_name){
 
 	var self = this;
 	self.user_name(in_name);
 }
 
-user_status_view.prototype.set_role_name = function(in_role){
+user_status_VM.prototype.set_role_name = function(in_role){
 
 	var self = this;
 	self.role(in_role);
 }
 
-user_status_view.prototype.set_login_status = function(login_status){
+user_status_VM.prototype.set_login_status = function(login_status){
 
 	var self = this;
 	switch(login_status){
@@ -40,26 +40,26 @@ user_status_view.prototype.set_login_status = function(login_status){
 	}
 }
 
-user_status_view.prototype.set_parse_id = function(parse_id){
+user_status_VM.prototype.set_parse_id = function(parse_id){
 
 	var self = this;
 	self.parse_id(parse_id);
 }
 
-user_status_view.prototype.set_pict_src = function(src){
+user_status_VM.prototype.set_pict_src = function(src){
 
 	var self = this;
 	self.pict_src(src);
 }
 
-user_status_view.prototype.set_decline_visible = function(status){
+user_status_VM.prototype.set_decline_visible = function(status){
 
 	var self = this;
 	self.decline_visible(status);
 }
 
 
-user_status_view.prototype.set_join_visible = function(status){
+user_status_VM.prototype.set_join_visible = function(status){
 
 	var self = this;
 	self.join_visible(status);
@@ -67,14 +67,14 @@ user_status_view.prototype.set_join_visible = function(status){
 
 
 
-user_status_view.prototype.decline = function(data, event){
+user_status_VM.prototype.decline = function(data, event){
   
 	var self = this;
 	console.log(data.parse_id());
 	self.set_login_status("logout");
 }
 
-user_status_view.prototype.join = function(data, event){
+user_status_VM.prototype.join = function(data, event){
 
 	var self = this;
 	// Parse_Cloud.join(own_parse_id, role_name, game_id);
@@ -83,12 +83,12 @@ user_status_view.prototype.join = function(data, event){
   
 }
 
-user_status_view.prototype.cancel = function(){
+user_status_VM.prototype.cancel = function(){
 	
 
 }
 
-user_status_view.prototype.enable_user_participant_change = function(status){
+user_status_VM.prototype.enable_user_participant_change = function(status){
   
 	var self = this;
 	self.enable_change(status);

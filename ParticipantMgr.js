@@ -1,5 +1,17 @@
 
-function ParticipantMgr(game_obj, parse_user_id, hangout_id){
+function ParticipantMgr(){
+
+	var self = this;
+	self.debater_obj_array = new Array();
+	self.audience_obj_array = new Array();
+	self.game_style = null
+	self.own_parse_id = null;
+	self.own_hangout_id = null;
+	self.parse_hangout_idmapping_array = new Object();
+}
+
+
+ParticipantMgr.prototype.initialize = function(game_obj, parse_user_id, hangout_id){
 
 	var self = this;
 	self.debater_obj_array = game_obj.debater_data_array;
@@ -7,10 +19,10 @@ function ParticipantMgr(game_obj, parse_user_id, hangout_id){
 	self.game_style = game_obj.game_style;
 	self.own_parse_id = parse_user_id;
 	self.own_hangout_id = hangout_id;
-	self.parse_hangout_idmapping_array = new Object();
-	
-	self.initialize(self.game_style);
+	self.setGameData();
+	var participant_table = new ParticipantTableMgr(self.game_style);
 }
+
 
 //participant changed eventが呼ばれたときに、毎回呼び出す。
 
@@ -41,7 +53,7 @@ ParticipantMgr.prototype.refresh_serverdata = function(game_id){
 
 
 
-ParticipantMgr.prototype.initialize = function(){
+ParticipantMgr.prototype.setGameData = function(){
 
 	var self = this;
 	var game_style = self.game_style;
@@ -113,7 +125,6 @@ ParticipantMgr.prototype.getParseID = function(hangout_id){
 		}
 	}
 	return parse_id;
-
 }
 
 ParticipantMgr.prototype.getRoleGroup = function(role_name){
@@ -222,6 +233,10 @@ ParticipantMgr.prototype.getUserFullName = function(role_name){
 }
 
 
+ParticipantMgr.prototype.getParseID = function(role_name){
+}
+ParticipantMgr.prototype.getLoginStatus = function(role_name){
+}
 
 
 ParticipantMgr.prototype.checkExistence = function(hangout_id){
@@ -234,7 +249,6 @@ ParticipantMgr.prototype.checkExistence = function(hangout_id){
 	}
 	return false;
 }
-
 
 
  // Init時に加え だれかが、Join ボタンやCancelボタンを押したときに、サーバデータをアップデート
