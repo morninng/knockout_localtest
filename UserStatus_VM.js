@@ -3,10 +3,10 @@ function user_status_VM(){
   var self = this;
   self.role = ko.observable();
   self.user_name = ko.observable("no one applied");
-  self.pict_src = ko.observable("./picture/1x1.jpg");
+  self.pict_src = ko.observable("./picture/1.jpg");
   self.user_status_css = ko.observable("notapplicant");
   self.parse_id = ko.observable(null);
-  self.enable_change = ko.observable(false);
+  self.enable_change = ko.observable(true);
   self.decline_visible = ko.observable(false);
   self.join_visible = ko.observable(false);
   

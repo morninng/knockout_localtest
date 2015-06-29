@@ -8,13 +8,9 @@ function AppMgr() {
 	self.game_status = 0;
 }
 
-
 AppMgr.prototype.initialize = function(){
 
   	var self = this;
-
-
-
 	self.participant_manager_object = new ParticipantMgr();
 
 	// hangout statusで受け取るJSONコード
@@ -47,17 +43,10 @@ AppMgr.prototype.initialize = function(){
 		 Opp:"ZZZ"
 		}
 	};
-	
+
 	self.participant_manager_object.initialize(self.game_obj, self.own_parse_id, self.own_hangoutid); 
 
-
-
-
-
-
 	//hangout_statusで受け取る game statusをparticipantmgr, container_modelview, chat_mgr,に反映 
-
-
 	//participant changed eventが走るときに毎回呼び出す。
 	//	self.participant_table = new ParticipantTableVM();
 
@@ -69,10 +58,7 @@ AppMgr.prototype.initialize = function(){
     var video_view_model = new VideoViewModel();
     var element = document.getElementById('video_area');
     ko.applyBindings(video_view_model, element);
-
 }
-
-
 
 
 AppMgr.prototype.update_game_status = function(num){

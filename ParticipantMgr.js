@@ -10,7 +10,6 @@ function ParticipantMgr(){
 	self.parse_hangout_idmapping_array = new Object();
 }
 
-
 ParticipantMgr.prototype.initialize = function(game_obj, parse_user_id, hangout_id){
 
 	var self = this;
@@ -298,7 +297,6 @@ ParticipantMgr.prototype.checkExistence = function(hangout_id){
 	}
 	return false;
 }
-
 
  // Init時に加え だれかが、Join ボタンやCancelボタンを押したときに、サーバデータをアップデート
 ParticipantMgr.prototype.updateServerData = function(){
