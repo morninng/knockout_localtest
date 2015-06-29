@@ -19,9 +19,31 @@ ParticipantMgr.prototype.initialize = function(game_obj, parse_user_id, hangout_
 	self.game_style = game_obj.game_style;
 	self.own_parse_id = parse_user_id;
 	self.own_hangout_id = hangout_id;
+	self.update_participants();
 	self.setGameData();
-	var participant_table = new ParticipantTableMgr(self.game_style);
+	self.participant_table = new ParticipantTableMgr(self.game_style);
+
 }
+
+ParticipantMgr.prototype.update_game_status = function(game_status){
+
+	var self = this;
+	switch(game_status){
+		case 1:
+		case 2:
+		case 3:
+			self.participant_table.UserObj_EnableButton_All();
+		break;
+		case 4:
+		case 5:
+			self.participant_table.UserObj_DisableButton_All();
+		break;
+	}
+
+
+}
+
+
 
 
 //participant changed eventが呼ばれたときに、毎回呼び出す。
@@ -41,7 +63,7 @@ ParticipantMgr.prototype.update_participants = function(){
 
 
 ParticipantMgr.prototype.set_parseid_hangoutid_mapping = function(parse_hangout_mapping){
-	
+	var self = this;
 	self.parse_hangout_idmapping_array = parse_hangout_mapping;
 }
 
@@ -233,9 +255,36 @@ ParticipantMgr.prototype.getUserFullName = function(role_name){
 }
 
 
+
+ParticipantMgr.prototype.get_hangouta_id = function(role_name){
+	var self = this;
+	var parse_id = self.getParseID(role_name);
+	for(var i=0; i<self.parse_hangout_idmapping_array.length; i++){
+		if( self.parse_hangout_idmapping_array[i].parse_id == parse_id){
+			return self.parse_hangout_idmapping_array[i].hangout_id;
+		}
+	}
+	return null;
+}
+
 ParticipantMgr.prototype.getParseID = function(role_name){
+	var self = this;
+	for(var i=0; i< self.debater_obj_array.length; i++){
+		if(self.debater_obj_array[i].role == role_name){
+			return self.debater_obj_array[i].parse_id;
+		}
+	}
+	return null;
 }
 ParticipantMgr.prototype.getLoginStatus = function(role_name){
+	var self = this;
+	var hangout_id = self.get_hangouta_id(role_name)
+	for(var i=0; i< self.participant_id_array.length; i++){
+		if(hangout_id == self.participant_id_array[i] ){
+			return "login";
+		}
+	}
+	return "logout";
 }
 
 

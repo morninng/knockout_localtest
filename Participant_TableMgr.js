@@ -24,7 +24,7 @@ ParticipantTableMgr.prototype.UserObj_setData = function(role_name){
 
 	var self = this;
 	var name = appmgr.participant_manager_object.getUserFirstName(role_name);
-	var login_status = "login";
+	var login_status = appmgr.participant_manager_object.getLoginStatus(role_name);
 	var parse_id = "XXXX";
 	var pict_src = appmgr.participant_manager_object.getUserPictureSrc(role_name);
 	var decline_status = true;
@@ -40,6 +40,20 @@ ParticipantTableMgr.prototype.UserObj_setData = function(role_name){
 	eval("self.user_obj_" + role_name + ".set_join_visible(" + join_status + ");" );
 	eval("self.user_obj_" + role_name + ".enable_user_participant_change(" + enable_change_status + ");" );
 	
+}
+
+ParticipantTableMgr.prototype.UserObj_EnableButton_All = function(){
+	var self = this;
+	for(var i = 0; i< self.role_array.length; i++){
+		eval("self.user_obj_" + self.role_array[i] + ".enable_change(true);" );
+	}
+}
+
+ParticipantTableMgr.prototype.UserObj_DisableButton_All = function(){
+	var self = this;
+	for(var i = 0; i< self.role_array.length; i++){
+		eval("self.user_obj_" + self.role_array[i] + ".enable_change(false);" );
+	}
 }
 
 

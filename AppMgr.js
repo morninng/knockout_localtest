@@ -13,29 +13,9 @@ AppMgr.prototype.initialize = function(){
 
   	var self = this;
 
-	self.game_obj = {
-	game_style:"NorthAmerica",
-	debater_data_array:[
-		{role:"PrimeMinister",parse_id:"tQDJHWFq27",first_name:"Yagi",last_name:"Moriyama",pict_src:"./picture/download.jpg"},
-		{role:"LeaderOpposition", parse_id:"parse_XXX2",first_name:"Flower",last_name:"AAA",pict_src:"./picture/flower.jpg"},
-		{role:"ReplyPM", parse_id:"XXXX",first_name:"Yuta",last_name:"Beautiful",pict_src:"./picture/1005335_976308.jpg"},
-		{role:"LOReply", parse_id:"parse_XXX2",first_name:"ccc",last_name:"Girl",pict_src:"./picture/robot.jpg"}
-		],
-	audience_data_array:
-		[{parse_id:"ZZZZ",first_name:"parse_XXX3",last_name:"robot",pict_src:"robot.jpg"},
-		 {parse_id:"ZZZZ",first_name:"ccc",last_name:"CCC",pict_src:"http://eee.jpg"}
-		],
-	hangout_ids:
-		{
-		 main:"XXXX",
-		 Gov:"YYYY",
-		 Opp:"ZZZ"
-		}
-	};
+
 
 	self.participant_manager_object = new ParticipantMgr();
-	self.participant_manager_object.initialize(self.game_obj, self.own_parse_id, self.own_hangoutid); 
-
 
 	// hangout statusで受け取るJSONコード
 	var parse_hangout_mapping = [ 
@@ -48,8 +28,35 @@ AppMgr.prototype.initialize = function(){
 
 	self.participant_manager_object.set_parseid_hangoutid_mapping(parse_hangout_mapping );
 
-	//hangout_statusで受け取るgame status
+	self.game_obj = {
+	game_style:"NorthAmerica",
+	debater_data_array:[
+		{role:"PrimeMinister",parse_id:"tQDJHWFq27",first_name:"Yagi",last_name:"Moriyama",pict_src:"./picture/download.jpg"},
+		{role:"LeaderOpposition", parse_id:"parse_XXX2",first_name:"Flower",last_name:"AAA",pict_src:"./picture/flower.jpg"},
+		{role:"ReplyPM", parse_id:"XXXX",first_name:"Yuta",last_name:"Beautiful",pict_src:"./picture/1005335_976308.jpg"},
+		{role:"LOReply", parse_id:"parse_XXX2",first_name:"ccc",last_name:"Girl",pict_src:"./picture/robot.jpg"}
+		],
+	audience_data_array:
+		[{role:"Audience1",parse_id:"ZZZZ",first_name:"parse_XXX3",last_name:"robot",pict_src:"robot.jpg"},
+		 {role:"Audience2",parse_id:"ZZZZ",first_name:"ccc",last_name:"CCC",pict_src:"http://eee.jpg"}
+		],
+	hangout_ids:
+		{
+		 main:"XXXX",
+		 Gov:"YYYY",
+		 Opp:"ZZZ"
+		}
+	};
 	
+	self.participant_manager_object.initialize(self.game_obj, self.own_parse_id, self.own_hangoutid); 
+
+
+
+
+
+
+	//hangout_statusで受け取る game statusをparticipantmgr, container_modelview, chat_mgr,に反映 
+
 
 	//participant changed eventが走るときに毎回呼び出す。
 	//	self.participant_table = new ParticipantTableVM();
@@ -64,3 +71,15 @@ AppMgr.prototype.initialize = function(){
     ko.applyBindings(video_view_model, element);
 
 }
+
+
+
+
+AppMgr.prototype.update_game_status = function(num){
+
+	var self = this;
+	self.participant_manager_object.update_game_status(num);
+
+}
+
+
