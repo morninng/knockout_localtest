@@ -28,15 +28,15 @@ VideoViewModel.prototype.update_speaker = function(hangout_speech_status, own_ha
 
   var self = this;
   self.own_hangout_id = own_hangoutid;
-  var speaker_hangout_id = hangout_speech_status.speaker;
-  var poi_speaker_hangout_id = hangout_speech_status.poi_speaker;
+  var speaker_obj = hangout_speech_status.speaker;
+  var poi_speaker_obj = hangout_speech_status.poi_speaker;
   var speaker_type = null;
 
-  if(poi_speaker_hangout_id){
-    self.show_Speaker(poi_speaker_hangout_id, "poi");
+  if(poi_speaker_obj){
+    self.show_Speaker(poi_speaker_obj, "poi");
     self.poi_candidate_view_array().splice(0, self.poi_candidate_view_array.length);
-  }else if (speaker_hangout_id){
-    self.show_Speaker(speaker_hangout_id, "speaker");
+  }else if (speaker_obj){
+    self.show_Speaker(speaker_obj, "speaker");
   }else{
     self.show_Speaker(null, "discussion");
   }
@@ -64,10 +64,20 @@ VideoViewModel.prototype.update_poi_candidate = function(hangout_speech_status, 
 
 }
 
- VideoViewModel.prototype.show_Speaker = function(hangout_id, status){
+ VideoViewModel.prototype.show_Speaker = function(speaker_obj, status){
   var self = this;
-  self.current_speaker = hangout_id;
+
+  var hangout_id = speaker_obj.hangout_id;
+  var role_name = speaker_obj.role;
+  var name = appmgr.participant_manager_object.getName_fromHangoutID(hangout_id);
+  var pict_src = appmgr.participant_manager_object.getPictSrc_fromHangoutID(hangout_id);
+
+  self.speech_visible(true);
+  self.speech_role(role_name); 
+  self.speaker_name(name); 
+  self.speech_time("test")
   
+  self.current_speaker = hangout_id;
  }
  
  VideoViewModel.prototype.take_poi = function(data, event){

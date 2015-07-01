@@ -61,8 +61,8 @@ AppMgr.prototype.initialize = function(){
 
 	// hangout statusで受け取るJSONコード
 	var hangout_speech_status = {
-		poi_speaker: null,
-		speaker: "hangout_XXX1",
+		poi_speaker: {hangout_id :"hangout_XXX1", role : "POI"},
+		speaker: {hangout_id :"hangout_XXX1", role : "PrimeMinister"},
 		poi_candidate: ["hangout_XXX2", "hangout_XXX3"]
 	}
 	video_view_model.update_speaker(hangout_speech_status, self.own_hangoutid);
