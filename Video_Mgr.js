@@ -13,7 +13,7 @@
   self.finish_poi_button = ko.observable(false); 
   self.finish_poi_bySpeaker_button = ko.observable(false); 
     
-  self.start_speech = ko.observable(false); 
+  self.start_speech_button_visible = ko.observable(false); 
   self.role_name_array = ko.observableArray();
   
   self.poi_candidate_visible = ko.observable(true); 
@@ -39,9 +39,48 @@ VideoViewModel.prototype.update_speaker = function(hangout_speech_status, own_ha
     self.show_Speaker(speaker_obj, "speaker");
   }else{
     self.show_Speaker(null, "discussion");
+    self.show_start_speech_button();
   }
 
 }
+
+ VideoViewModel.prototype.show_Speaker = function(speaker_obj, status){
+  var self = this;
+
+  if(speaker_obj){
+    var hangout_id = speaker_obj.hangout_id;
+    var role_name = speaker_obj.role;
+    var name = appmgr.participant_manager_object.getName_fromHangoutID(hangout_id);
+    var pict_src = appmgr.participant_manager_object.getPictSrc_fromHangoutID(hangout_id);
+
+    self.speech_visible(true);
+    self.speech_role(role_name); 
+    self.speaker_name(name); 
+    self.speech_time("test");
+    self.current_speaker = hangout_id;
+    self.start_speech();
+  }else{
+    // discussion mode  
+  }
+
+ }
+
+ VideoViewModel.prototype.show_start_speech_button = function(){
+  var self = this;
+
+  var own_role_array = appmgr.participant_manager_object.get_own_role_array();
+
+  if(own_role_array.length > 0){
+    self.start_speech_button_visible(true);
+  }
+
+  for(var i=0; i< own_role_array.length; i++){
+    var role_name = own_role_array[i];
+    var obj = {button_role_name:role_name};
+    self.role_name_array.push(obj);
+  }
+ }
+
 
 VideoViewModel.prototype.update_poi_candidate = function(hangout_speech_status, own_hangoutid){
 
@@ -64,26 +103,8 @@ VideoViewModel.prototype.update_poi_candidate = function(hangout_speech_status, 
 
 }
 
- VideoViewModel.prototype.show_Speaker = function(speaker_obj, status){
-  var self = this;
 
-  var hangout_id = speaker_obj.hangout_id;
-  var role_name = speaker_obj.role;
-  var name = appmgr.participant_manager_object.getName_fromHangoutID(hangout_id);
-  var pict_src = appmgr.participant_manager_object.getPictSrc_fromHangoutID(hangout_id);
-
-  self.speech_visible(true);
-  self.speech_role(role_name); 
-  self.speaker_name(name); 
-  self.speech_time("test")
-  
-  self.current_speaker = hangout_id;
- }
  
- VideoViewModel.prototype.take_poi = function(data, event){
-  console.log(data.hangout_id);
- }
-
 
  VideoViewModel.prototype.add_candidate = function( in_hangout_id){
 
@@ -112,12 +133,15 @@ VideoViewModel.prototype.update_poi_candidate = function(hangout_speech_status, 
   VideoViewModel.prototype.remove_candidate_all = function(in_hangout_id){
   }
 
- VideoViewModel.prototype.show_start_speeh_button = function(){
 
-  self.start_speech(true);
-  app_mgr.participant.get_role_array();
+ VideoViewModel.prototype.take_poi = function(data, event){
+  console.log(data.hangout_id);
  }
 
+
+ VideoViewModel.prototype.click_speech_start = function(data, event){
+  console.log(data.button_role_name);
+ }
 
 
  VideoViewModel.prototype.click_complete_speech = function(){

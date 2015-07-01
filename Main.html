@@ -60,7 +60,8 @@
 	<button data-bind="visible: finish_poi_button, event:{click:finish_poi}">Finish Poi</button>
 	<button data-bind="visible: finish_poi_bySpeaker_button, event:{click:finish_poi_bySpeaker}">Finish Poi</button>
   </div>
-  <div data-bind="visible: start_speech">
+  <div data-bind="visible: start_speech_button_visible">
+  	Start speech as
 	<ul data-bind="foreach: role_name_array">
 	 <li>
 	   <div>

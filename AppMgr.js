@@ -27,7 +27,7 @@ AppMgr.prototype.initialize = function(){
 	self.game_obj = {
 	game_style:"NorthAmerica",
 	debater_data_array:[
-		{role:"PrimeMinister",parse_id:"parse_XXX1",first_name:"Yagi",last_name:"Moriyama",pict_src:"./picture/download.jpg"},
+		{role:"PrimeMinister",parse_id:"parse_XXX2",first_name:"Yagi",last_name:"Moriyama",pict_src:"./picture/download.jpg"},
 		{role:"LeaderOpposition", parse_id:"parse_XXX2",first_name:"Flower",last_name:"AAA",pict_src:"./picture/flower.jpg"},
 		{role:"ReplyPM", parse_id:"parse_XXX3",first_name:"Yuta",last_name:"Beautiful",pict_src:"./picture/1005335_976308.jpg"},
 		{role:"LOReply", parse_id:"XXXX",first_name:"ccc",last_name:"Girl",pict_src:"./picture/robot.jpg"}
@@ -60,17 +60,22 @@ AppMgr.prototype.initialize = function(){
     ko.applyBindings(video_view_model, element);
 
 	// hangout statusで受け取るJSONコード
+	/*
 	var hangout_speech_status = {
 		poi_speaker: {hangout_id :"hangout_XXX1", role : "POI"},
 		speaker: {hangout_id :"hangout_XXX1", role : "PrimeMinister"},
 		poi_candidate: ["hangout_XXX2", "hangout_XXX3"]
+	}*/
+
+	var hangout_speech_status = {
+		poi_speaker: null,
+		speaker: null,
+		poi_candidate: []
 	}
+
 	video_view_model.update_speaker(hangout_speech_status, self.own_hangoutid);
 	video_view_model.update_poi_candidate(hangout_speech_status, self.own_hangoutid);
-
-
 }
-
 
 AppMgr.prototype.update_game_status = function(num){
 
