@@ -38,17 +38,11 @@ ParticipantMgr.prototype.update_game_status = function(game_status){
 			self.participant_table.UserObj_DisableButton_All();
 		break;
 	}
-
-
 }
-
-
-
 
 //participant changed eventが呼ばれたときに、毎回呼び出す。
 
 ParticipantMgr.prototype.update_participants = function(){
-
 	var self = this;
 	self.participant_id_array = ["hangout_XXX1", "hangout_XXX2"];
 	
@@ -57,22 +51,16 @@ ParticipantMgr.prototype.update_participants = function(){
 	//for(var i=0; i<  participant_object_array; i++){
 	//	self.participant_id_array.push(participant_object_array[i].id);
 	//}
-
 }
-
 
 ParticipantMgr.prototype.set_parseid_hangoutid_mapping = function(parse_hangout_mapping){
 	var self = this;
 	self.parse_hangout_idmapping_array = parse_hangout_mapping;
 }
 
-
-
 ParticipantMgr.prototype.refresh_serverdata = function(game_id){
 	
 }
-
-
 
 ParticipantMgr.prototype.setGameData = function(){
 
@@ -108,7 +96,7 @@ ParticipantMgr.prototype.get_role_array = function(hangout_id){
 
 	var self = this;
 
-	var parse_id = self.getParseID(hangout_id);
+	var parse_id = self.getParseID_fromHangoutID(hangout_id);
 	var role_array = new Array();
 
 	for(var i=0; i< self.debater_obj_array.length; i++){
@@ -136,8 +124,50 @@ ParticipantMgr.prototype.get_own_role_array = function(){
 }
 
 
-ParticipantMgr.prototype.getParseID = function(hangout_id){
 
+ParticipantMgr.prototype.getName_fromHangoutID = function(hangout_id){
+
+	var self = this;
+	var parse_id = self.getParseID_fromHangoutID(hangout_id);
+
+	for( var i=0; i<self.debater_obj_array.length; i++){
+		if(self.debater_obj_array[i].parse_id == parse_id){
+			var name = self.debater_obj_array[i].first_name + " " + self.debater_obj_array[i].last_name;
+			return name;
+		}
+	}
+	for( var i=0; i<self.audience_obj_array.length; i++){
+		if(self.audience_obj_array[i].parse_id == parse_id){
+			var name = self.audience_obj_array[i].first_name + " " + self.audience_obj_array[i].last_name;
+			return name;
+		}
+	}
+	return null;
+}
+
+ParticipantMgr.prototype.getPictSrc_fromHangoutID = function(hangout_id){
+
+	var self = this;
+	var parse_id = self.getParseID_fromHangoutID(hangout_id);
+
+	for( var i=0; i<self.debater_obj_array.length; i++){
+		if(self.debater_obj_array[i].parse_id == parse_id){
+			var pict_src = self.debater_obj_array[i].pict_src;
+			return pict_src;
+		}
+	}
+	for( var i=0; i<self.audience_obj_array.length; i++){
+		if(self.audience_obj_array[i].parse_id == parse_id){
+			var pict_src = self.audience_obj_array[i].pict_src;
+			return pict_src;
+		}
+	}
+	return null;
+}
+
+ParticipantMgr.prototype.getParseID_fromHangoutID = function(hangout_id){
+
+	var self = this;
 	var parse_id = null;
 	
 	for(var i=0; i< self.parse_hangout_idmapping_array.length; i++){
@@ -193,10 +223,9 @@ ParticipantMgr.prototype.isDebater_yourself = function(){
 
 
 	var self = this;
-	var parse_id = self.getParseID();
 
 	for(var i=0; i< self.debater_obj_array.length; i++){
-	  if(self.debater_obj_array[i].parse_id == parse_id){
+	  if(self.debater_obj_array[i].parse_id == self.own_parse_id ){
 	  	return true;
 	  }
 	}
@@ -257,7 +286,7 @@ ParticipantMgr.prototype.getUserFullName = function(role_name){
 
 ParticipantMgr.prototype.get_hangouta_id = function(role_name){
 	var self = this;
-	var parse_id = self.getParseID(role_name);
+	var parse_id = self.getParseID_fromRole(role_name);
 	for(var i=0; i<self.parse_hangout_idmapping_array.length; i++){
 		if( self.parse_hangout_idmapping_array[i].parse_id == parse_id){
 			return self.parse_hangout_idmapping_array[i].hangout_id;
@@ -266,7 +295,7 @@ ParticipantMgr.prototype.get_hangouta_id = function(role_name){
 	return null;
 }
 
-ParticipantMgr.prototype.getParseID = function(role_name){
+ParticipantMgr.prototype.getParseID_fromRole = function(role_name){
 	var self = this;
 	for(var i=0; i< self.debater_obj_array.length; i++){
 		if(self.debater_obj_array[i].role == role_name){

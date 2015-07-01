@@ -28,7 +28,7 @@ ParticipantTableMgr.prototype.UserObj_setData = function(role_name){
 	if(name == null){
 		return ;
 	}
-	var parse_id = appmgr.participant_manager_object.getParseID(role_name);
+	var parse_id = appmgr.participant_manager_object.getParseID_fromRole(role_name);
 	var pict_src = appmgr.participant_manager_object.getUserPictureSrc(role_name);
 
 	eval("self.user_obj_" + role_name + ".set_name('" + name + "');" );

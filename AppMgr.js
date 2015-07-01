@@ -3,7 +3,7 @@ function AppMgr() {
   	var self = this;
 	self.own_parse_id="XXXX";
 	self.game_id="YYYYY";
-	self.own_hangoutid = "ZZZZZ";
+	self.own_hangoutid = "hangout_XXX2";
 	self.game_obj = new Object();
 	self.game_status = 0;
 }
@@ -27,14 +27,14 @@ AppMgr.prototype.initialize = function(){
 	self.game_obj = {
 	game_style:"NorthAmerica",
 	debater_data_array:[
-		{role:"PrimeMinister",parse_id:"tQDJHWFq27",first_name:"Yagi",last_name:"Moriyama",pict_src:"./picture/download.jpg"},
+		{role:"PrimeMinister",parse_id:"parse_XXX1",first_name:"Yagi",last_name:"Moriyama",pict_src:"./picture/download.jpg"},
 		{role:"LeaderOpposition", parse_id:"parse_XXX2",first_name:"Flower",last_name:"AAA",pict_src:"./picture/flower.jpg"},
-		{role:"ReplyPM", parse_id:"XXXX",first_name:"Yuta",last_name:"Beautiful",pict_src:"./picture/1005335_976308.jpg"},
-		{role:"LOReply", parse_id:"parse_XXX2",first_name:"ccc",last_name:"Girl",pict_src:"./picture/robot.jpg"}
+		{role:"ReplyPM", parse_id:"parse_XXX3",first_name:"Yuta",last_name:"Beautiful",pict_src:"./picture/1005335_976308.jpg"},
+		{role:"LOReply", parse_id:"XXXX",first_name:"ccc",last_name:"Girl",pict_src:"./picture/robot.jpg"}
 		],
 	audience_data_array:
-		[{role:"Audience1",parse_id:"ZZZZ",first_name:"parse_XXX3",last_name:"robot",pict_src:"robot.jpg"},
-		 {role:"Audience2",parse_id:"ZZZZ",first_name:"ccc",last_name:"CCC",pict_src:"http://eee.jpg"}
+		[{role:"Audience1",parse_id:"tQDJHWFq27",first_name:"Robot",last_name:"robot",pict_src:"robot.jpg"},
+		 {role:"Audience2",parse_id:"tQDJHWFq27",first_name:"ccc",last_name:"CCC",pict_src:"http://eee.jpg"}
 		],
 	hangout_ids:
 		{
@@ -58,6 +58,17 @@ AppMgr.prototype.initialize = function(){
     var video_view_model = new VideoViewModel();
     var element = document.getElementById('video_area');
     ko.applyBindings(video_view_model, element);
+
+	// hangout statusで受け取るJSONコード
+	var hangout_speech_status = {
+		poi_speaker: null,
+		speaker: "hangout_XXX1",
+		poi_candidate: ["hangout_XXX2", "hangout_XXX3"]
+	}
+	video_view_model.update_speaker(hangout_speech_status, self.own_hangoutid);
+	video_view_model.update_poi_candidate(hangout_speech_status, self.own_hangoutid);
+
+
 }
 
 
