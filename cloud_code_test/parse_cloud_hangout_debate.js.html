@@ -1,0 +1,81 @@
+<html>
+<head></head>
+<body>
+
+
+
+<script src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+
+
+<script type="text/javascript">
+
+ var parse_app_id = "EWPPdrDVaAIqhRazWp8K0ZlmafAAPt93JiOAonvX";
+ var parse_js_key = "US6Lheio8PGcBdIpwGFhFSQVpi5GKunGf6hGq5Ze";
+ var debate_game_id = "pofBusvlin";
+
+ Parse.initialize(parse_app_id, parse_js_key);
+
+ hangout_test(debate_game_id);
+
+
+//Parse.Cloud.define("Cloud_GetHangoutGameData_debate", function(request, response) {
+
+function hangout_test(game_id){
+  console.log("--------hangout debate game called------");
+  
+  var self = this;
+  self.count = 0;
+  self.role_count = 0;
+//  var game_id = request.params.game_id;
+  self.game_response_obj = new Object();
+  
+  var Game = Parse.Object.extend("Game");
+  var game_query = new Parse.Query(Game);
+
+  game_query.get(game_id, {
+    success: function(game_obj){
+      var participant_obj = game_obj.get("participant_role");
+      self.role_count = Object.keys(participant_obj).length;
+      
+      self.game_response_obj.game_title = game_obj.get("motion");
+      self.game_response_obj.game_style = game_obj.get("style");
+      self.game_response_obj.debater_data_array = new Array(); 
+
+      for(var key in participant_obj ){
+      	var user_parse_id = participant_obj[key];
+        self.game_response_obj.debater_data_array.push({ role:key, parse_id:user_parse_id });
+        var User = Parse.Object.extend("User");
+        var user_query = new Parse.Query(User);
+        user_query .get(user_parse_id, {
+          success: function(user_obj){
+  	        for(var j=0; j<self.game_response_obj.debater_data_array.length; j++ ){
+  	          if(self.game_response_obj.debater_data_array[j].parse_id == user_obj.id){
+    	          self.game_response_obj.debater_data_array[j].first_name = user_obj.get("FirstName");
+    	          self.game_response_obj.debater_data_array[j].last_name = user_obj.get("LastName");
+    	          self.game_response_obj.debater_data_array[j].pict_src= user_obj.get("Profile_picture");
+  	          }
+  	        }
+  	        self.count ++;
+  	        if(self.count == self.role_count){
+  	    	  //  response.success(self.game_obj);
+              console.log("all set");
+  	        }
+  	      },
+  	      error: function(object, error) {
+           //   error_response = {code:4, message: "event do not exist"};
+           //   response.error(error_response);
+          }
+        });
+      }
+    },
+    error: function(object, error) {
+     // error_response = {code:3, message: "game do not exist"};
+     // response.error(error_response);
+    }
+  });
+
+}
+
+</script>
+</body>
+</html>

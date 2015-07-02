@@ -8,7 +8,7 @@ function AppMgr() {
 	self.game_status = 0;
 }
 
-AppMgr.prototype.initialize = function(){
+AppMgr.prototype.initialize = function(in_game_obj){
 
   	var self = this;
 	self.participant_manager_object = new ParticipantMgr();
@@ -24,6 +24,8 @@ AppMgr.prototype.initialize = function(){
 
 	self.participant_manager_object.set_parseid_hangoutid_mapping(parse_hangout_mapping );
 
+	self.game_obj = in_game_obj;
+/*
 	self.game_obj = {
 	game_style:"NorthAmerica",
 	debater_data_array:[
@@ -41,8 +43,10 @@ AppMgr.prototype.initialize = function(){
 		 main:"XXXX",
 		 Gov:"YYYY",
 		 Opp:"ZZZ"
-		}
+		},
+	game_title:"thw legalize tobacco"
 	};
+*/
 
 	self.participant_manager_object.initialize(self.game_obj, self.own_parse_id, self.own_hangoutid); 
 
