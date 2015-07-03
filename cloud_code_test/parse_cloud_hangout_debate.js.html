@@ -14,12 +14,11 @@
  var debate_game_id = "e62UzMTp2Y";
 
  Parse.initialize(parse_app_id, parse_js_key);
- new hangout_test(debate_game_id);
-
+ new HangoutDebateDataRetrieve(debate_game_id);
 
 //Parse.Cloud.define("Cloud_GetHangoutGameData_debate", function(request, response) {
 
-function hangout_test(game_id){
+function HangoutDebateDataRetrieve(game_id){
   console.log("--------hangout debate game called------");
   
   var self = this;
@@ -52,7 +51,7 @@ function hangout_test(game_id){
 }
 
 
-hangout_test.prototype.RetrieveDebaterData = function(){
+HangoutDebateDataRetrieve.prototype.RetrieveDebaterData = function(){
 
   var self = this;
   var participant_obj = self.game_obj.get("participant_role");
@@ -98,7 +97,7 @@ hangout_test.prototype.RetrieveDebaterData = function(){
   }
 }
 
-hangout_test.prototype.RetrieveAudienceData = function(){
+HangoutDebateDataRetrieve.prototype.RetrieveAudienceData = function(){
 
   var self = this;
   var audience_obj_array = self.game_obj.get("audience_participants");
@@ -147,7 +146,7 @@ hangout_test.prototype.RetrieveAudienceData = function(){
 }
 
 
-hangout_test.prototype.Check_And_Return_Data = function(){
+HangoutDebateDataRetrieve.prototype.Check_And_Return_Data = function(){
 
   var self = this;
   if(self.debater_data_retrieve_complete && self.audience_data_retrieve_complete){
