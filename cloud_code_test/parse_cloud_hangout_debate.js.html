@@ -11,11 +11,10 @@
 
  var parse_app_id = "EWPPdrDVaAIqhRazWp8K0ZlmafAAPt93JiOAonvX";
  var parse_js_key = "US6Lheio8PGcBdIpwGFhFSQVpi5GKunGf6hGq5Ze";
- var debate_game_id = "pofBusvlin";
+ var debate_game_id = "e62UzMTp2Y";
 
  Parse.initialize(parse_app_id, parse_js_key);
-
- hangout_test(debate_game_id);
+ new hangout_test(debate_game_id);
 
 
 //Parse.Cloud.define("Cloud_GetHangoutGameData_debate", function(request, response) {
@@ -26,55 +25,138 @@ function hangout_test(game_id){
   var self = this;
   self.count = 0;
   self.role_count = 0;
+  self.game_id = game_id;
 //  var game_id = request.params.game_id;
   self.game_response_obj = new Object();
+  self.debater_data_retrieve_complete = false;
+  self.audience_data_retrieve_complete = false;
   
   var Game = Parse.Object.extend("Game");
   var game_query = new Parse.Query(Game);
 
   game_query.get(game_id, {
     success: function(game_obj){
-      var participant_obj = game_obj.get("participant_role");
-      self.role_count = Object.keys(participant_obj).length;
-      
+      self.game_obj = game_obj;
       self.game_response_obj.game_title = game_obj.get("motion");
       self.game_response_obj.game_style = game_obj.get("style");
       self.game_response_obj.debater_data_array = new Array(); 
-
-      for(var key in participant_obj ){
-      	var user_parse_id = participant_obj[key];
-        self.game_response_obj.debater_data_array.push({ role:key, parse_id:user_parse_id });
-        var User = Parse.Object.extend("User");
-        var user_query = new Parse.Query(User);
-        user_query .get(user_parse_id, {
-          success: function(user_obj){
-  	        for(var j=0; j<self.game_response_obj.debater_data_array.length; j++ ){
-  	          if(self.game_response_obj.debater_data_array[j].parse_id == user_obj.id){
-    	          self.game_response_obj.debater_data_array[j].first_name = user_obj.get("FirstName");
-    	          self.game_response_obj.debater_data_array[j].last_name = user_obj.get("LastName");
-    	          self.game_response_obj.debater_data_array[j].pict_src= user_obj.get("Profile_picture");
-  	          }
-  	        }
-  	        self.count ++;
-  	        if(self.count == self.role_count){
-  	    	  //  response.success(self.game_obj);
-              console.log("all set");
-  	        }
-  	      },
-  	      error: function(object, error) {
-           //   error_response = {code:4, message: "event do not exist"};
-           //   response.error(error_response);
-          }
-        });
-      }
+      self.game_response_obj.audience_data_array = new Array();
+      self.RetrieveDebaterData();
+      self.RetrieveAudienceData();
     },
     error: function(object, error) {
      // error_response = {code:3, message: "game do not exist"};
      // response.error(error_response);
     }
   });
+}
+
+
+hangout_test.prototype.RetrieveDebaterData = function(){
+
+  var self = this;
+  var participant_obj = self.game_obj.get("participant_role");
+
+  if(!participant_obj){
+    self.debater_data_retrieve_complete =true;
+    self.Check_And_Return_Data();
+    return;
+  }
+  self.role_count = Object.keys(participant_obj).length;
+  if(self.role_count ==0){
+    self.debater_data_retrieve_complete =true;
+    self.Check_And_Return_Data();
+    return;
+  }
+
+
+  for(var key in participant_obj ){
+    var user_parse_id = participant_obj[key];
+    self.game_response_obj.debater_data_array.push({ role:key, parse_id:user_parse_id });
+    var User = Parse.Object.extend("User");
+    var user_query = new Parse.Query(User);
+    user_query .get(user_parse_id, {
+      success: function(user_obj){
+        for(var j=0; j<self.game_response_obj.debater_data_array.length; j++ ){
+          if(self.game_response_obj.debater_data_array[j].parse_id == user_obj.id){
+            self.game_response_obj.debater_data_array[j].first_name = user_obj.get("FirstName");
+            self.game_response_obj.debater_data_array[j].last_name = user_obj.get("LastName");
+            self.game_response_obj.debater_data_array[j].pict_src= user_obj.get("Profile_picture");
+          }
+        }
+        self.count ++;
+        if(self.count == self.role_count){
+         self.debater_data_retrieve_complete =true;
+         self.Check_And_Return_Data();
+        }
+      },
+      error: function(object, error) {
+       //   error_response = {code:4, message: "event do not exist"};
+       //   response.error(error_response);
+      }
+    });
+  }
+}
+
+hangout_test.prototype.RetrieveAudienceData = function(){
+
+  var self = this;
+  var audience_obj_array = self.game_obj.get("audience_participants");
+  var audience_count = 0
+
+  if(!audience_obj_array){
+    self.audience_data_retrieve_complete =true;
+    self.Check_And_Return_Data();
+    return;
+  }else if(audience_obj_array.length ==0){
+    self.audience_data_retrieve_complete =true;
+    self.Check_And_Return_Data();
+    return;
+  }
+
+
+  for(var i=0; i<audience_obj_array.length; i++ ){
+    num =i+1;
+    eval("var role_name = 'audience" + num + "'");
+    console.log(role_name);
+    var user_parse_id = audience_obj_array[i];
+    self.game_response_obj.audience_data_array.push({ role:role_name, parse_id:user_parse_id })
+
+    var User = Parse.Object.extend("User");
+    var user_query = new Parse.Query(User);
+    user_query .get(user_parse_id, {
+       success: function(user_obj){
+        for(var j=0; j<self.game_response_obj.audience_data_array.length; j++ ){
+          if(self.game_response_obj.audience_data_array[j].parse_id == user_obj.id){
+            self.game_response_obj.audience_data_array[j].first_name = user_obj.get("FirstName");
+            self.game_response_obj.audience_data_array[j].last_name = user_obj.get("LastName");
+            self.game_response_obj.audience_data_array[j].pict_src = user_obj.get("Profile_picture");
+          }
+        }
+        audience_count++;
+        if(audience_count ==audience_obj_array.length){
+         self.audience_data_retrieve_complete =true;
+         self.Check_And_Return_Data();
+        }
+       },
+       error: function(object, error){
+        console.log("aaa");
+       }
+     });
+  }
+}
+
+
+hangout_test.prototype.Check_And_Return_Data = function(){
+
+  var self = this;
+  if(self.debater_data_retrieve_complete && self.audience_data_retrieve_complete){
+    console.log("all data retrieval success");
+    console.log(self.game_response_obj);
+  }
 
 }
+
 
 </script>
 </body>
