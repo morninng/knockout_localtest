@@ -130,13 +130,17 @@
   <table class='table table-bordered'>
    <thead><tr><th>OpeningGovernment</th><th>OpeningOpposition</th></tr></thead>
    <tbody>
-   <tr><td><div id='PM_Container'></div></td><td><div id='LO_Container'></div></td></tr>
-   <tr><td><div id='DPM_Container'></div></td><td><div id='DLO_Container'></div></td></tr>
+   <tr><td><div id='PM_Container' data-bind="template: {name: 'user_status_template'}"></div></td>
+   		<td><div id='LO_Container'  data-bind="template: {name: 'user_status_template'}"></div></td></tr>
+   <tr><td><div id='DPM_Container'  data-bind="template: {name: 'user_status_template'}"></div></td>
+   		<td><div id='DLO_Container'  data-bind="template: {name: 'user_status_template'}"></div></td></tr>
    </tbody>
    <thead><tr><th>ClosintGovernment</th><th>ClosingOpposition</th></tr></thead>
    <tbody>
-   <tr><td><div id='MG_Container'></div></td><td><div id='MO_Container'></div></td></tr>
-   <tr><td><div id='GW_Container'></div></td><td><div id='OW_Container'></div></td></tr>
+   <tr><td><div id='MG_Container'  data-bind="template: {name: 'user_status_template'}"></div></td>
+   		<td><div id='MO_Container'  data-bind="template: {name: 'user_status_template'}"></div></td></tr>
+   <tr><td><div id='GW_Container'  data-bind="template: {name: 'user_status_template'}"></div></td>
+   		<td><div id='OW_Container'  data-bind="template: {name: 'user_status_template'}"></div></td></tr>
    </tbody>
   </table>
   <div id="Audience"></div>
@@ -183,7 +187,7 @@
 
  var parse_app_id = "EWPPdrDVaAIqhRazWp8K0ZlmafAAPt93JiOAonvX";
  var parse_js_key = "US6Lheio8PGcBdIpwGFhFSQVpi5GKunGf6hGq5Ze";
- var debate_game_id = "2o8fGURmhf";
+ var debate_game_id = "EgHfnqNlbq";
 
  Parse.initialize(parse_app_id, parse_js_key);
 
