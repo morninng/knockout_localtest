@@ -15,9 +15,9 @@ AppMgr.prototype.initialize = function(in_game_obj){
 
 	// hangout statusで受け取るJSONコード
 	var parse_hangout_mapping = [ 
-		         {parse_id:"parse_XXX1", hangout_id:"hangout_XXX1"},
+		         {parse_id:"tnsjqJOaJk", hangout_id:"hangout_XXX1"},
 		         {parse_id:"parse_XXX2", hangout_id:"hangout_XXX2"},
-		         {parse_id:"parse_XXX3", hangout_id:"hangout_XXX3"},
+		         {parse_id:"tQDJHWFq27", hangout_id:"hangout_XXX3"},
 		         {parse_id:"XXXX", hangout_id:"ZZZZZ"},
 		         {parse_id:"tQDJHWFq27", hangout_id:"hangout_XXX4"}
 		         ];
@@ -59,9 +59,9 @@ AppMgr.prototype.initialize = function(in_game_obj){
     var Video_html_text = Video_html_Template();
     video_element.html(Video_html_text);
 
-    var video_view_model = new VideoViewModel();
-    var element = document.getElementById('video_area');
-    ko.applyBindings(video_view_model, element);
+    self.video_view_model = new VideoViewModel();
+    var video_el = document.getElementById('video_area');
+    ko.applyBindings(self.video_view_model, video_el);
 
 	// hangout statusで受け取るJSONコード
 	/*
@@ -74,11 +74,27 @@ AppMgr.prototype.initialize = function(in_game_obj){
 	var hangout_speech_status = {
 		poi_speaker: null,
 		speaker: null,
-		poi_candidate: []
+		poi_candidate: ["hangout_XXX1"]
 	}
 
-	video_view_model.update_speaker(hangout_speech_status, self.own_hangoutid);
-	video_view_model.update_poi_candidate(hangout_speech_status, self.own_hangoutid);
+	self.video_view_model.update_speaker(hangout_speech_status, self.own_hangoutid);
+	self.video_view_model.update_poi_candidate(hangout_speech_status, self.own_hangoutid);
+
+
+
+	var Chat_html_Template = _.template($('[data-template="chat_template"]').html());
+    var chat_element = $("#chat_area");
+    var Chat_html_text = Chat_html_Template();
+    chat_element.html(Chat_html_text);
+
+
+    chat_view_model = new ChatViewModel();
+    var chat_el = document.getElementById('chat_template_area');
+    ko.applyBindings(chat_view_model, chat_el);
+    chat_view_model.initialize(self.own_hangoutid);
+
+
+
 }
 
 AppMgr.prototype.update_game_status = function(num){

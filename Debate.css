@@ -11,6 +11,16 @@
 }
 
 
+.message_css_own{
+  color: red;
+
+}
+
+.message_css_others{
+  color: black;
+
+}
+
 #container_main {
 	background-color: #EEEEEE;
 	width: 1012px;

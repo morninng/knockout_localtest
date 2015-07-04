@@ -27,13 +27,7 @@
 <!-- ko if:center_column_existence -->
 
 	<div id="container_center_pain" data-bind="css: center_column_css_class">
-		<div id="group_hangout_button"></div>
-		<div id="chat_window" align="center">
-			<textarea style="width:98%; margin-top:5px" placeholder="message to partner"></textarea>
-			<div align="right"><button style="margin:3px; margin-right:10px">send</button></div>
-			<div style="width:98%; height:500px; border:double; margin:2px; background-color: #FFFFFF" align="left" > message window
-			</div>
-		</div>
+		<div id="chat_area"></div>
 	</div>
 
 <!-- /ko -->
@@ -42,6 +36,43 @@
 		<div id="right-middle-pain">g</div>
 	</div>
   </div>
+
+<script type="text/html" id="user_status_template">
+     <div data-bind="css: user_status_css">
+        <img style="max-width:50px; float:left" data-bind="attr: {src: pict_src}">
+        <div style="float:right; line-height: 1px">
+         <p data-bind ="text:role"></p>
+         <p data-bind ="text:user_name"></p>
+        </div>
+        <div style="clear:both" align="center" data-bind = "visible:enable_change">
+          <button data-bind = "visible: decline_visible, event:{click:decline}">decline</button>
+          <button data-bind = "visible: join_visible, event:{click:join}">join</button>
+        </div>
+     </div>
+</script>
+
+
+
+<script type="text/template" data-template="chat_template"> 
+  <div id="chat_template_area">
+	<div id="group_hangout_button" data-bind="visible: hangout_visible"><button>hangout</button></div>
+	<div id="chat_window" align="center">
+		The message will be shared only team members.
+		<form id="chat_send_form">
+          <textarea style="width:98%; margin-top:5px" id="chat_textarea" placeholder="message to partner"></textarea>
+		  <div align="right"><button style="margin:3px; margin-right:10px" data-bind = "click:click_sendbutton">send</button></div>
+		</form>
+		<div style="width:98%; height:500px; border:double; margin:2px; background-color: #FFFFFF" align="left" >
+		  <div data-bind="visible:initial_message_visible"> message window </div>
+		  <ul data-bind="foreach: chat_message_array" style="list-style:none;padding-left: 0;">
+		  	<li data-bind="css:chat_class">
+              <strong data-bind="text:sender_name"></strong><span data-bind="text:chat_message"></span>
+            </li>
+		  </ul>
+		</div>
+	</div>
+  </div>
+</script>
 
 
 
@@ -150,19 +181,6 @@
 
 
 
-<script type="text/html" id="user_status_template">
-     <div data-bind="css: user_status_css">
-        <img style="max-width:50px; float:left" data-bind="attr: {src: pict_src}">
-        <div style="float:right; line-height: 1px">
-         <p data-bind ="text:role"></p>
-         <p data-bind ="text:user_name"></p>
-        </div>
-        <div style="clear:both" align="center" data-bind = "visible:enable_change">
-          <button data-bind = "visible: decline_visible, event:{click:decline}">decline</button>
-          <button data-bind = "visible: join_visible, event:{click:join}">join</button>
-        </div>
-     </div>
-</script>
 
 
 
@@ -175,6 +193,7 @@
 <script type="text/javascript" src="./ParticipantMgr.js"></script>
 <script type="text/javascript" src="./Participant_TableMgr.js"></script>
 <script type="text/javascript" src="./UserStatus_VM.js"></script>
+<script type="text/javascript" src="./Chat_Mgr.js"></script>
 
 
 <script src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
@@ -202,8 +221,6 @@
       //data should be vaidated before upload and the error should not happen in server side
     }
   });
-
-
 
 </script>
 

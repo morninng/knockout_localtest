@@ -125,6 +125,27 @@ ParticipantMgr.prototype.get_own_role_array = function(){
 
 
 
+ParticipantMgr.prototype.getFirstName_fromHangoutID = function(hangout_id){
+
+	var self = this;
+	var parse_id = self.getParseID_fromHangoutID(hangout_id);
+
+	for( var i=0; i<self.debater_obj_array.length; i++){
+		if(self.debater_obj_array[i].parse_id == parse_id){
+			var name = self.debater_obj_array[i].first_name;
+			return name;
+		}
+	}
+	for( var i=0; i<self.audience_obj_array.length; i++){
+		if(self.audience_obj_array[i].parse_id == parse_id){
+			var name = self.audience_obj_array[i].first_name;
+			return name;
+		}
+	}
+	return null;
+}
+
+
 ParticipantMgr.prototype.getName_fromHangoutID = function(hangout_id){
 
 	var self = this;
