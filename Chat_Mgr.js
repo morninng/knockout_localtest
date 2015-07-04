@@ -18,7 +18,7 @@ ChatViewModel.prototype.initialize = function(in_hangout_id){
 ChatViewModel.prototype.click_sendbutton = function(data, event){
 
   var self = this;
-  var text =  document.forms.chat_send_form.chat_textarea.value
+  var text =  document.forms.chat_send_form.chat_textarea.value;
   self.receive_message(text);  //ここは、実際にはhangoutのメッセージを送信だが、今はテストなので、受け取りの関数を呼び出す。
 
 }
