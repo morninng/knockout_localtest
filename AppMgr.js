@@ -18,7 +18,7 @@ AppMgr.prototype.initialize = function(in_game_obj, in_own_hangout_id){
 	// hangout statusで受け取るJSONコード
 	var parse_hangout_mapping = [
 		         {parse_id:"tnsjqJOaJk", hangout_id:"hangout_XXX1"},
-		         {parse_id:"parse_XXX2", hangout_id:"hangout_XXX2"},
+		         {parse_id:"37mnmciaGV", hangout_id:"hangout_XXX2"},
 		         {parse_id:"tQDJHWFq27", hangout_id:"hangout_XXX3"},
 		         {parse_id:"XXXX", hangout_id:"ZZZZZ"},
 		         {parse_id:"6ZMl4LGKim", hangout_id:"hangout_XXX4"}
@@ -37,8 +37,8 @@ AppMgr.prototype.initialize = function(in_game_obj, in_own_hangout_id){
 		{role:"LOReply", parse_id:"XXXX",first_name:"ccc",last_name:"Girl",pict_src:"./picture/robot.jpg"}
 		],
 	audience_data_array:
-		[{role:"Audience1",parse_id:"tQDJHWFq27",first_name:"Robot",last_name:"robot",pict_src:"robot.jpg"},
-		 {role:"Audience2",parse_id:"tQDJHWFq27",first_name:"ccc",last_name:"CCC",pict_src:"http://eee.jpg"}
+		[{role:"audience1",parse_id:"tQDJHWFq27",first_name:"Robot",last_name:"robot",pict_src:"robot.jpg"},
+		 {role:"audience2",parse_id:"tQDJHWFq27",first_name:"ccc",last_name:"CCC",pict_src:"http://eee.jpg"}
 		],
 	hangout_ids:
 		{
