@@ -44,7 +44,7 @@ ParticipantMgr.prototype.update_game_status = function(game_status){
 
 ParticipantMgr.prototype.update_participants = function(){
 	var self = this;
-	self.participant_id_array = ["hangout_XXX1", "hangout_XXX2"];
+	self.participant_id_array = ["hangout_XXX1", "hangout_XXX2", "hangout_XXX4"];
 	
 	// ここは、こっちが正しいが、hangout上しかできないのであとで入れ替える
 	// var participant_object_array = getparticipants();
@@ -69,18 +69,18 @@ ParticipantMgr.prototype.setGameData = function(){
 	
 	switch(game_style){
 	  case 'NorthAmerica':
-		self.role_array = ["PrimeMinister","LeaderOpposition","MemberGovernment","MemberOpposition","ReplyPM","LOReply"];
-		self.role_group_array = {PrimeMinister:"Gov",LeaderOpposition:"Opp",MemberGovernment:"Gov",MemberOpposition:"Opp",ReplyPM:"Gov",LOReply:"Opp"};
+		self.role_array = ["PrimeMinister","LeaderOpposition","MemberGovernment","MemberOpposition","ReplyPM","LOReply","Audince1","Audince2","Audince3","Audince4"];
+		self.role_group_array = {PrimeMinister:"Gov",LeaderOpposition:"Opp",MemberGovernment:"Gov",MemberOpposition:"Opp",ReplyPM:"Gov",LOReply:"Opp",Audience1:"Aud",Audience2:"Aud",Audience3:"Aud",Audience4:"Aud"};
 		break;
 	  case 'Asian':
 	  	self.role_array = ["PrimeMinister","LeaderOpposition","DeptyPrimeMinister","DeptyLeaderOpposition",
-                      "GovernmentWhip","OppositionWhip","GovermentReply","OppositionReply"];
-		self.role_group_array = {PrimeMinister:"Gov",LeaderOpposition:"Opp",DeptyPrimeMinister:"Gov",DeptyLeaderOpposition:"Opp",GovernmentWhip:"Gov",OppositionWhip:"Opp",ReplyPM:"Gov",LOReply:"Opp"};
+                      "GovernmentWhip","OppositionWhip","GovermentReply","OppositionReply","Audince1","Audince2"];
+		self.role_group_array = {PrimeMinister:"Gov",LeaderOpposition:"Opp",DeptyPrimeMinister:"Gov",DeptyLeaderOpposition:"Opp",GovernmentWhip:"Gov",OppositionWhip:"Opp",ReplyPM:"Gov",LOReply:"Opp",Audience1:"Aud",Audience2:"Aud"};
 		break;
 	  case 'BP':
 	  	self.role_array = ["PrimeMinister","LeaderOpposition","DeptyPrimeMinister","DeptyLeaderOpposition",
-                      "MemberGovernment","MemberOpposition","GovermentWhip","OppositionWhip"];
-		self.role_group_array = {PrimeMinister:"OG",LeaderOpposition:"OO",DeptyPrimeMinister:"OG",DeptyLeaderOpposition:"OO",MemberGovernment:"CG",MemberOpposition:"CO",GovermentWhip:"CG",OppositionWhip:"CO"};
+                      "MemberGovernment","MemberOpposition","GovermentWhip","OppositionWhip","Audince1","Audince2"];
+		self.role_group_array = {PrimeMinister:"OG",LeaderOpposition:"OO",DeptyPrimeMinister:"OG",DeptyLeaderOpposition:"OO",MemberGovernment:"CG",MemberOpposition:"CO",GovermentWhip:"CG",OppositionWhip:"CO",Audience1:"Aud",Audience2:"Aud"};
 		break;
 	}
 }
@@ -104,9 +104,9 @@ ParticipantMgr.prototype.get_role_array = function(hangout_id){
 	    role_array.push(self.debater_obj_array[i].role)
 	  }
 	}
-	for(key in self.audience_obj_array){
-	  if(self.audience_obj_array[key].parse_id == parse_id){
-	    role_array.push(self.audience_obj_array[key].role)
+	for(var i=0; i< self.audience_obj_array; i++){
+	  if(self.audience_obj_array[i].parse_id == parse_id){
+	    role_array.push(self.audience_obj_array[i].role)
 	  }
 	}
 	
@@ -199,13 +199,13 @@ ParticipantMgr.prototype.getParseID_fromHangoutID = function(hangout_id){
 	return parse_id;
 }
 
-ParticipantMgr.prototype.getRoleGroup = function(role_name){
 
+
+ParticipantMgr.prototype.getRoleGroup = function(role_name){
 	var self = this;
 	role_group_name = self.role_group_array[role_name];
 	return role_group_name;
 }
-
 
 ParticipantMgr.prototype.isYourPartner = function(hangout_id){
 
@@ -229,10 +229,9 @@ ParticipantMgr.prototype.isYourPartner = function(hangout_id){
 ParticipantMgr.prototype.isAudience_yourself = function(){
 
 	var self = this;
-	var parse_id = self.getParseID();
 
-	for(key in self.audience_obj_array){
-	  if(self.audience_obj_array[key].parse_id == parse_id){
+	for(var i=0; i< self.audience_obj_array.length; i++){
+	  if(self.audience_obj_array[i].parse_id == self.own_parse_id){
 	    return true;
 	  }
 	}
@@ -304,8 +303,7 @@ ParticipantMgr.prototype.getUserFullName = function(role_name){
 }
 
 
-
-ParticipantMgr.prototype.get_hangouta_id = function(role_name){
+ParticipantMgr.prototype.get_hangout_id = function(role_name){
 	var self = this;
 	var parse_id = self.getParseID_fromRole(role_name);
 	for(var i=0; i<self.parse_hangout_idmapping_array.length; i++){
@@ -323,15 +321,85 @@ ParticipantMgr.prototype.getParseID_fromRole = function(role_name){
 			return self.debater_obj_array[i].parse_id;
 		}
 	}
+	for(var i=0; i< self.audience_obj_array.length; i++){
+		if(self.audience_obj_array[i].role == role_name){
+			return self.audience_obj_array[i].parse_id;
+		}
+	}
 	return null;
 }
+
+
+
+ParticipantMgr.prototype.is_Login = function(role_name){
+	var self = this;
+	var hangout_id = self.get_hangout_id(role_name)
+	if(!hangout_id){
+		return false;
+	}
+	for(var i=0; i< self.participant_id_array.length; i++){
+	  if(hangout_id == self.participant_id_array[i] ){
+			return true;
+	  }
+	}
+	return false;
+}
+
+
+
+
+ParticipantMgr.prototype.is_OwnGroup = function(in_role_name){
+
+	var self = this;
+	var my_role_array = self.get_own_role_array();
+	var my_role = my_role_array[0];
+	var my_group = self.role_group_array[my_role];
+
+	var group_checked = self.role_group_array[in_role_name];
+
+    if(group_checked == my_group){
+    	return true;
+    }
+    return false;
+}
+
+ParticipantMgr.prototype.is_OwnRole = function(in_role_name){
+
+	var self = this;
+	var my_role_array = self.get_own_role_array();
+	var my_role = my_role_array[0];
+
+    if(in_role_name == my_role){
+    	return true;
+    }
+    return false;
+}
+
+ParticipantMgr.prototype.is_Audience = function(in_role_name){
+
+	var self = this;
+	var group_checked = self.role_group_array[in_role_name];
+
+    if(group_checked == "Aud"){
+    	return true;
+    }
+    return false;
+
+}
+
 ParticipantMgr.prototype.getLoginStatus = function(role_name){
 	var self = this;
-	var hangout_id = self.get_hangouta_id(role_name)
-	for(var i=0; i< self.participant_id_array.length; i++){
+
+	var parse_id = self.getParseID_fromRole(role_name);
+	if(parse_id){
+	  var hangout_id = self.get_hangout_id(role_name)
+	  for(var i=0; i< self.participant_id_array.length; i++){
 		if(hangout_id == self.participant_id_array[i] ){
 			return "login";
 		}
+	  }
+	}else{
+		return "no_applicant";
 	}
 	return "logout";
 }

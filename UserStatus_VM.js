@@ -1,32 +1,47 @@
 
-function user_status_VM(){
+function user_status_VM(role_name){
   var self = this;
-  self.role = ko.observable();
+  self.role = ko.observable(role_name);
   self.user_name = ko.observable("no one applied");
   self.pict_src = ko.observable("./picture/1.jpg");
   self.user_status_css = ko.observable("notapplicant");
   self.parse_id = ko.observable(null);
   self.enable_change = ko.observable(true);
+
   self.decline_visible = ko.observable(false);
   self.join_visible = ko.observable(false);
+  self.cancel_visible = ko.observable(false);
   
 }
 
-user_status_VM.prototype.set_name = function(in_name){
+
+user_status_VM.prototype.update_user_status = function(){
 
 	var self = this;
-	self.user_name(in_name);
+	self.update_user_info(self.role());
+	self.update_user_login_status(self.role());
+	self.update_button_byGamestatus();
+	self.update_button_status(self.role());
 }
 
-user_status_VM.prototype.set_role_name = function(in_role){
-
+user_status_VM.prototype.update_user_info = function(role_name){
 	var self = this;
-	self.role(in_role);
+	var parse_id = appmgr.participant_manager_object.getParseID_fromRole(role_name);
+	if(parse_id == null){
+		return ;
+	}
+	var name = appmgr.participant_manager_object.getUserFirstName(role_name);
+	var pict_src = appmgr.participant_manager_object.getUserPictureSrc(role_name);
+
+	self.user_name(name);
+	self.parse_id(parse_id);
+	self.pict_src(pict_src);
 }
 
-user_status_VM.prototype.set_login_status = function(login_status){
+user_status_VM.prototype.update_user_login_status = function(role_name){
 
 	var self = this;
+	var login_status = appmgr.participant_manager_object.getLoginStatus(role_name);
 	switch(login_status){
 	  case 'login':
 	    self.user_status_css("login");
@@ -40,30 +55,70 @@ user_status_VM.prototype.set_login_status = function(login_status){
 	}
 }
 
-user_status_VM.prototype.set_parse_id = function(parse_id){
-
+user_status_VM.prototype.update_button_status = function(role_name){
 	var self = this;
-	self.parse_id(parse_id);
+	var parse_id = appmgr.participant_manager_object.getParseID_fromRole(role_name);
+	var is_login = appmgr.participant_manager_object.is_Login(role_name);
+	var is_own_group = appmgr.participant_manager_object.is_OwnGroup(role_name);
+	var is_my_role = appmgr.participant_manager_object.is_OwnRole(role_name);
+	var is_audience = appmgr.participant_manager_object.is_Audience(role_name);
+
+	if(parse_id){
+      if(is_login){
+      	if(is_my_role){
+          self.cancel_visible(true);
+          self.join_visible(false);
+          self.decline_visible(false);
+      	}else{
+          self.cancel_visible(false);
+          self.join_visible(false);
+          self.decline_visible(false);
+      	}
+      }else{
+          self.cancel_visible(false);
+          self.join_visible(false);
+          self.decline_visible(true);
+	  }
+	}else{
+      if(is_own_group){
+      	  if(is_audience){
+            self.cancel_visible(false);
+            self.join_visible(false);
+            self.decline_visible(false);
+          }else{
+            self.cancel_visible(false);
+            self.join_visible(true);
+            self.decline_visible(false);
+          }
+      }else{
+          self.cancel_visible(false);
+          self.join_visible(false);
+          self.decline_visible(false);
+      }
+    }
 }
 
-user_status_VM.prototype.set_pict_src = function(src){
+user_status_VM.prototype.update_button_byGamestatus = function(){
 
 	var self = this;
-	self.pict_src(src);
+	var game_status = appmgr.game_status;
+	switch(game_status){
+		case 1:
+		case 2:
+		case 3:
+			self.enable_change(true);
+		break;
+		case 4:
+		case 5:
+			self.enable_change(false);
+		break;
+	}
 }
 
-user_status_VM.prototype.set_decline_visible = function(status){
-
-	var self = this;
-	self.decline_visible(status);
-}
 
 
-user_status_VM.prototype.set_join_visible = function(status){
 
-	var self = this;
-	self.join_visible(status);
-}
+
 
 
 
@@ -80,7 +135,6 @@ user_status_VM.prototype.join = function(data, event){
 	// Parse_Cloud.join(own_parse_id, role_name, game_id);
 	console.log(data.enable_change());
 	self.set_login_status("no_applicant");
-  
 }
 
 user_status_VM.prototype.cancel = function(){

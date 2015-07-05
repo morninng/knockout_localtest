@@ -5,7 +5,7 @@ function AppMgr(in_game_id, in_own_parse_id ) {
 	self.game_id=in_game_id;
 	self.own_hangoutid = "";
 	self.game_obj = new Object();
-	self.game_status = 0;
+	self.game_status = 2;
 }
 
 AppMgr.prototype.initialize = function(in_game_obj, in_own_hangout_id){
@@ -16,12 +16,12 @@ AppMgr.prototype.initialize = function(in_game_obj, in_own_hangout_id){
 	self.participant_manager_object = new ParticipantMgr();
 
 	// hangout statusで受け取るJSONコード
-	var parse_hangout_mapping = [ 
+	var parse_hangout_mapping = [
 		         {parse_id:"tnsjqJOaJk", hangout_id:"hangout_XXX1"},
 		         {parse_id:"parse_XXX2", hangout_id:"hangout_XXX2"},
 		         {parse_id:"tQDJHWFq27", hangout_id:"hangout_XXX3"},
 		         {parse_id:"XXXX", hangout_id:"ZZZZZ"},
-		         {parse_id:"tQDJHWFq27", hangout_id:"hangout_XXX4"}
+		         {parse_id:"6ZMl4LGKim", hangout_id:"hangout_XXX4"}
 		         ];
 
 	self.participant_manager_object.set_parseid_hangoutid_mapping(parse_hangout_mapping );
@@ -51,6 +51,7 @@ AppMgr.prototype.initialize = function(in_game_obj, in_own_hangout_id){
 */
 
 	self.participant_manager_object.initialize(self.game_obj, self.own_parse_id, self.own_hangoutid); 
+	
 
 	//hangout_statusで受け取る game statusをparticipantmgr, container_modelview, chat_mgr,に反映 
 	//participant changed eventが走るときに毎回呼び出す。
@@ -94,16 +95,10 @@ AppMgr.prototype.initialize = function(in_game_obj, in_own_hangout_id){
     ko.applyBindings(chat_view_model, chat_el);
     chat_view_model.initialize(self.own_hangoutid);
 
-
-
-
-
-
 	var Title_html_Template = _.template($('[data-template="title_template"]').html());
     var title_element = $("#title_area");
     var Title_html_text = Title_html_Template();
     title_element.html(Title_html_text);
-
 
     title_view_model = new title_VM();
     var title_el = document.getElementById('title_template_area');

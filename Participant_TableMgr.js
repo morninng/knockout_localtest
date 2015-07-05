@@ -1,71 +1,30 @@
+//残す
 
 function ParticipantTableMgr(game_style){
 
 	var self = this;
-	
 	self.CreateTableTemplate(game_style);
 	self.create_rolename_array(game_style);	
 	for(var i = 0; i< self.role_array.length; i++){
 		self.CreateUserObj(self.role_array[i], self.container_array[i]);
-		self.UserObj_setData(self.role_array[i]);
-		self.User_LoginStatus_set(self.role_array[i]);
-		self.User_Button_set(self.role_array[i]);
+		self.UpdateUserObj(self.role_array[i]);
+
 	}
 }
 
-
 ParticipantTableMgr.prototype.CreateUserObj = function(role_name, container_name){
 	var self = this;
-	eval("self.user_obj_" + role_name + " = new user_status_VM();" );
+	eval("self.user_obj_" + role_name + " = new user_status_VM('" + role_name + "');" );
 	eval("ko.applyBindings( self.user_obj_" + role_name + " , document.getElementById('" + container_name + "'));" );
 }
 
 
-ParticipantTableMgr.prototype.UserObj_setData = function(role_name){
-
+ParticipantTableMgr.prototype.UpdateUserObj = function(role_name){
 	var self = this;
-	var name = appmgr.participant_manager_object.getUserFirstName(role_name);
-	if(name == null){
-		return ;
-	}
-	var parse_id = appmgr.participant_manager_object.getParseID_fromRole(role_name);
-	var pict_src = appmgr.participant_manager_object.getUserPictureSrc(role_name);
-
-	eval("self.user_obj_" + role_name + ".set_name('" + name + "');" );
-	eval("self.user_obj_" + role_name + ".set_role_name('" + role_name + "');" );
-	eval("self.user_obj_" + role_name + ".set_parse_id('" + parse_id + "');" );
-	eval("self.user_obj_" + role_name + ".set_pict_src('" + pict_src + "');" );
-	
+	eval("self.user_obj_" + role_name + ".update_user_status();");
 }
 
-ParticipantTableMgr.prototype.User_LoginStatus_set = function(role_name){
 
-	var self = this;
-	var login_status = appmgr.participant_manager_object.getLoginStatus(role_name);
-	eval("self.user_obj_" + role_name + ".set_login_status('" + login_status + "');" );
-
-}
-
-ParticipantTableMgr.prototype.User_Button_set = function(role_name){
-
-	var self = this;
-	var decline_button = false;
-	var join_button = false;
-
-	var login_status = appmgr.participant_manager_object.getLoginStatus(role_name);
-	var name = appmgr.participant_manager_object.getUserFirstName(role_name);
-
-	if(name == null){
-		join_button = true;
-	}else if(login_status == "logout"){
-		decline_button = true;
-	}
-
-
-	eval("self.user_obj_" + role_name + ".set_decline_visible(" + decline_button + ");" );
-	eval("self.user_obj_" + role_name + ".set_join_visible(" + join_button + ");" );
-
-}
 
 ParticipantTableMgr.prototype.UserObj_EnableButton_All = function(){
 	var self = this;
@@ -74,12 +33,14 @@ ParticipantTableMgr.prototype.UserObj_EnableButton_All = function(){
 	}
 }
 
+//残す
 ParticipantTableMgr.prototype.UserObj_DisableButton_All = function(){
 	var self = this;
 	for(var i = 0; i< self.role_array.length; i++){
 		eval("self.user_obj_" + self.role_array[i] + ".enable_change(false);" );
 	}
 }
+
 
 ParticipantTableMgr.prototype.create_rolename_array = function(game_style){
 	
@@ -104,6 +65,7 @@ ParticipantTableMgr.prototype.create_rolename_array = function(game_style){
 	}
 	
 }
+
 
 ParticipantTableMgr.prototype.CreateTableTemplate = function(game_style){
 

@@ -46,6 +46,7 @@
         <div style="clear:both" align="center" data-bind = "visible:enable_change">
           <button data-bind = "visible: decline_visible, event:{click:decline}">decline</button>
           <button data-bind = "visible: join_visible, event:{click:join}">join</button>
+          <button data-bind = "visible: cancel_visible, event:{click:cancel}">cancel</button>
         </div>
      </div>
 </script>
@@ -216,8 +217,9 @@
  var parse_js_key = "US6Lheio8PGcBdIpwGFhFSQVpi5GKunGf6hGq5Ze";
  Parse.initialize(parse_app_id, parse_js_key);
 
- var debate_game_id = "EgHfnqNlbq";
- var own_parse_id = "tnsjqJOaJk";
+ var debate_game_id = "e62UzMTp2Y";
+ var own_parse_id = "6ZMl4LGKim";
+ var own_hangout_id = "hangout_XXX4";
 
  var container_modelview = new ContainerMainAppViewModel();
  ko.applyBindings(container_modelview);
@@ -226,7 +228,7 @@
 
   Parse.Cloud.run('Cloud_GetHangoutGameData_debate', { game_id: debate_game_id},{
     success: function(game_obj) {
- 		appmgr.initialize(game_obj);
+ 		appmgr.initialize(game_obj, own_hangout_id);
 
     },
     error: function(error) {
