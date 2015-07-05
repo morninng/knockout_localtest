@@ -34,20 +34,36 @@
 }
 
 #event_left{
-	width: 850px;
+	max-width: 850px;
+	min-width: 500px;
 	float: left;
 }
 #event_title_input{
-	width: 850px;
+	max-width: 850px;
+	min-width: 500px;
+	float: left;
 }
+
+#event_title_show_out{
+	padding: 5px;
+	float: left;
+	border: 1px solid #000000;
+}
+
+#event_title_show_in{
+	padding: 5px;
+	font-weight:normal;
+	max-width: 850px;
+	min-width: 500px;
+}
+
 
 #event_right{
 	width: 120px;
-	left: 850px;
-    position: absolute;
     top: 50%;
     margin-top: -0.5em;
 }
+
 
 
 #container_left_pain {

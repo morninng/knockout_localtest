@@ -12,15 +12,13 @@
 </head>
 
 <body>
+  <div id="container_top">
+	<div id = "title_area"></div>
+  </div>
 
-	<div id = "event-title">
-		<div id = "event_left">a1</div>
-		<div id = "event_right">b2</div>
-	</div>
-
-  <div id="container_main">
+  <div id="container_main" style="clear:both">
 	<div id="container_left_pain" data-bind="css: left_column_css_class">
-	   <div id="video_area">
+		<div id="video_area">
 	   </div>
 	</div>
 
@@ -37,6 +35,7 @@
 	</div>
   </div>
 
+
 <script type="text/html" id="user_status_template">
      <div data-bind="css: user_status_css">
         <img style="max-width:50px; float:left" data-bind="attr: {src: pict_src}">
@@ -51,6 +50,22 @@
      </div>
 </script>
 
+
+ <script type="text/template" data-template="title_template">
+    <div id="title_template_area">
+	  <form id="title_form">
+		<div id="event_left" >
+		  <p id="event_title_show_out" data-bind="visible:title_show"><strong>motion: </strong><span data-bind="text:title_sentence" id="event_title_show_in"></span></p>
+		  <div data-bind="visible:title_input"><input id="event_title_input" autofocus data-bind=" text:title_sentence, attr:{value:title_value, style:title_width}" type="text"></div>
+		</div>
+		<div id="event_right" style="float:left;">
+		  <button data-bind="visible:title_show, click:activate_updating_title;" >update</button>
+		  <button data-bind="visible:title_input, click:send_title">send</button>
+		  <button data-bind="visible:title_input, click:cancel_updating_title">cancel</button>
+		</div>
+	  </form>
+	</div>
+ </script>
 
 
 <script type="text/template" data-template="chat_template"> 
@@ -73,10 +88,6 @@
 	</div>
   </div>
 </script>
-
-
-
-
 
 
 <script type="text/template" data-template="video_area_template">
@@ -194,6 +205,7 @@
 <script type="text/javascript" src="./Participant_TableMgr.js"></script>
 <script type="text/javascript" src="./UserStatus_VM.js"></script>
 <script type="text/javascript" src="./Chat_Mgr.js"></script>
+<script type="text/javascript" src="./title_Mgr.js"></script>
 
 
 <script src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
@@ -271,7 +283,7 @@
 
 </script>
 
-
+<br><br><br><br><br><br><br><br><br>v
 	<button onclick = "change_column()">aaa</button>
 	<button onclick = "get_role()">get_role</button>
 	<br>

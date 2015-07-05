@@ -95,6 +95,20 @@ AppMgr.prototype.initialize = function(in_game_obj){
 
 
 
+
+
+
+	var Title_html_Template = _.template($('[data-template="title_template"]').html());
+    var title_element = $("#title_area");
+    var Title_html_text = Title_html_Template();
+    title_element.html(Title_html_text);
+
+
+    title_view_model = new title_VM();
+    var title_el = document.getElementById('title_template_area');
+    ko.applyBindings(title_view_model, title_el);
+    title_view_model.initialize();
+
 }
 
 AppMgr.prototype.update_game_status = function(num){
