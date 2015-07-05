@@ -27,20 +27,21 @@ user_status_VM.prototype.update_user_status = function(){
 
 user_status_VM.prototype.update_user_info = function(role_name){
 	var self = this;
-	var parse_id = appmgr.participant_manager_object.getParseID_fromRole(role_name);
-	if(parse_id == null){
-		return ;
-	}
-	var name = appmgr.participant_manager_object.getUserFirstName(role_name);
-	var pict_src = appmgr.participant_manager_object.getUserPictureSrc(role_name);
 
 	var isAudience = appmgr.participant_manager_object.is_Audience(role_name);
 	if(!isAudience){
 		self.role(role_name);
 	}
 
-	self.user_name(name);
+	var parse_id = appmgr.participant_manager_object.getParseID_fromRole(role_name);
 	self.parse_id(parse_id);
+	if(parse_id == null){
+		return ;
+	}
+
+	var name = appmgr.participant_manager_object.getUserFirstName(role_name);
+	var pict_src = appmgr.participant_manager_object.getUserPictureSrc(role_name);
+	self.user_name(name);
 	self.pict_src(pict_src);
 }
 
@@ -56,7 +57,7 @@ user_status_VM.prototype.update_user_login_status = function(role_name){
 	    self.user_status_css("logout");
 	  break;
 	  case 'no_applicant':
-	    self.user_status_css("notapplicant");
+	    self.user_status_css("no_applicant");
 	  break;
 	}
 }
