@@ -109,7 +109,7 @@ AppMgr.prototype.initialize = function(in_game_obj, in_own_hangout_id){
     title_view_model = new title_VM();
     var title_el = document.getElementById('title_template_area');
     ko.applyBindings(title_view_model, title_el);
-    title_view_model.initialize(self.game_id, self.game_obj);
+    title_view_model.initialize(self.game_id, self.game_obj, self.own_parse_id);
 
 }
 
