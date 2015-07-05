@@ -30,8 +30,12 @@
 
 <!-- /ko -->
 	<div id="container_right_pain" data-bind="css: right_column_css_class">
-		<div id="right-top-pain"><div id="participant_table"></div></div>
-		<div id="right-middle-pain">g</div>
+		<div id="right-top-pain">
+			<div id="participant_table"></div>
+			<p align="center"><strong>Audiences</strong></p>
+			<div id="audience_list"></div>
+		</div>
+		<div id="right-middle-pain"></div>
 	</div>
   </div>
 
@@ -147,7 +151,6 @@
    <td><div id='LOR_Container'  data-bind="template: {name: 'user_status_template'}"></div></td></tr>
    </tbody>
   </table>
-  <div id="Audience"></div>
 </script>
 
 
@@ -165,7 +168,6 @@
        <td><div id='OR_Container'  data-bind="template: {name: 'user_status_template'}"></div></td></tr>
    </tbody>
   </table>
-  <div id="Audience"></div>
 </script>
 
 
@@ -186,12 +188,15 @@
    		<td><div id='OW_Container'  data-bind="template: {name: 'user_status_template'}"></div></td></tr>
    </tbody>
   </table>
-  <div id="Audience"></div>
 </script>
 
 
 
-
+<script type="text/template" data-template="audience_list_template">
+ <% _.each(list, function(e,i){ %>
+  <div id= '<%= e.container_name %>'data-bind="template:{name:'user_status_template'}" style="float:left;"></div>
+ <% }); %>
+</script>
 
 
 

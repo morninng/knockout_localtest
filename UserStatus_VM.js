@@ -1,7 +1,8 @@
 
 function user_status_VM(role_name){
   var self = this;
-  self.role = ko.observable(role_name);
+  self.role_name = role_name;
+  self.role = ko.observable();
   self.user_name = ko.observable("no one applied");
   self.pict_src = ko.observable("./picture/1.jpg");
   self.user_status_css = ko.observable("notapplicant");
@@ -18,10 +19,10 @@ function user_status_VM(role_name){
 user_status_VM.prototype.update_user_status = function(){
 
 	var self = this;
-	self.update_user_info(self.role());
-	self.update_user_login_status(self.role());
+	self.update_user_info(self.role_name);
+	self.update_user_login_status(self.role_name);
 	self.update_button_byGamestatus();
-	self.update_button_status(self.role());
+	self.update_button_status(self.role_name);
 }
 
 user_status_VM.prototype.update_user_info = function(role_name){
@@ -32,6 +33,11 @@ user_status_VM.prototype.update_user_info = function(role_name){
 	}
 	var name = appmgr.participant_manager_object.getUserFirstName(role_name);
 	var pict_src = appmgr.participant_manager_object.getUserPictureSrc(role_name);
+
+	var isAudience = appmgr.participant_manager_object.is_Audience(role_name);
+	if(!isAudience){
+		self.role(role_name);
+	}
 
 	self.user_name(name);
 	self.parse_id(parse_id);

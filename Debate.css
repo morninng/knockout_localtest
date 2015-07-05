@@ -50,6 +50,12 @@
 	border: 1px solid #000000;
 }
 
+#audience_list{
+	padding: 5px;
+	float: left;
+	border: 1px solid #000000;
+}
+
 #event_title_show_in{
 	padding: 5px;
 	font-weight:normal;

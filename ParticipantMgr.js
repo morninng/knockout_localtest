@@ -70,17 +70,17 @@ ParticipantMgr.prototype.setGameData = function(){
 	switch(game_style){
 	  case 'NorthAmerica':
 		self.role_array = ["PrimeMinister","LeaderOpposition","MemberGovernment","MemberOpposition","ReplyPM","LOReply","Audince1","Audince2","Audince3","Audince4"];
-		self.role_group_array = {PrimeMinister:"Gov",LeaderOpposition:"Opp",MemberGovernment:"Gov",MemberOpposition:"Opp",ReplyPM:"Gov",LOReply:"Opp",Audience1:"Aud",Audience2:"Aud",Audience3:"Aud",Audience4:"Aud"};
+		self.role_group_array = {PrimeMinister:"Gov",LeaderOpposition:"Opp",MemberGovernment:"Gov",MemberOpposition:"Opp",ReplyPM:"Gov",LOReply:"Opp",audience1:"Aud",audience2:"Aud",audience3:"Aud",audience4:"Aud"};
 		break;
 	  case 'Asian':
 	  	self.role_array = ["PrimeMinister","LeaderOpposition","DeptyPrimeMinister","DeptyLeaderOpposition",
                       "GovernmentWhip","OppositionWhip","GovermentReply","OppositionReply","Audince1","Audince2"];
-		self.role_group_array = {PrimeMinister:"Gov",LeaderOpposition:"Opp",DeptyPrimeMinister:"Gov",DeptyLeaderOpposition:"Opp",GovernmentWhip:"Gov",OppositionWhip:"Opp",ReplyPM:"Gov",LOReply:"Opp",Audience1:"Aud",Audience2:"Aud"};
+		self.role_group_array = {PrimeMinister:"Gov",LeaderOpposition:"Opp",DeptyPrimeMinister:"Gov",DeptyLeaderOpposition:"Opp",GovernmentWhip:"Gov",OppositionWhip:"Opp",ReplyPM:"Gov",LOReply:"Opp",audience1:"Aud",audience2:"Aud"};
 		break;
 	  case 'BP':
 	  	self.role_array = ["PrimeMinister","LeaderOpposition","DeptyPrimeMinister","DeptyLeaderOpposition",
                       "MemberGovernment","MemberOpposition","GovermentWhip","OppositionWhip","Audince1","Audince2"];
-		self.role_group_array = {PrimeMinister:"OG",LeaderOpposition:"OO",DeptyPrimeMinister:"OG",DeptyLeaderOpposition:"OO",MemberGovernment:"CG",MemberOpposition:"CO",GovermentWhip:"CG",OppositionWhip:"CO",Audience1:"Aud",Audience2:"Aud"};
+		self.role_group_array = {PrimeMinister:"OG",LeaderOpposition:"OO",DeptyPrimeMinister:"OG",DeptyLeaderOpposition:"OO",MemberGovernment:"CG",MemberOpposition:"CO",GovermentWhip:"CG",OppositionWhip:"CO",audience1:"Aud",audience2:"Aud"};
 		break;
 	}
 }
@@ -113,6 +113,13 @@ ParticipantMgr.prototype.get_role_array = function(hangout_id){
 	return role_array;
 
 }
+
+ParticipantMgr.prototype.get_number_of_audience = function(){
+
+	var self = this;
+	return self.audience_obj_array.length;
+}
+
 
 ParticipantMgr.prototype.get_own_role_array = function(){
 
