@@ -54,7 +54,6 @@ AppMgr.prototype.initialize = function(in_game_obj, in_own_hangout_id){
 
 	//hangout_statusで受け取る game statusをparticipantmgr, container_modelview, chat_mgr,に反映 
 	//participant changed eventが走るときに毎回呼び出す。
-	//	self.participant_table = new ParticipantTableVM();
 
 	var Video_html_Template = _.template($('[data-template="video_area_template"]').html());
     var video_element = $("#video_area");
