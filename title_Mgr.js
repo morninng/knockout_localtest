@@ -9,11 +9,11 @@ function title_VM(){
 	self.title_count = 0;
 }
 
-title_VM.prototype.initialize = function(game_id){
+title_VM.prototype.initialize = function(game_id, game_obj){
 
 	var self = this;
 	self.title_show(true);
-	var title = "start title title  title  le title title  title title title  title title title title title title title title title  title title title title title title title title last";
+	var title = game_obj.game_title;
 	self.title_sentence(title);
 	var title_width = $("#event_title_show_out").width();
 	var title_width_str = "width:" + String(title_width) + "px"
@@ -46,20 +46,29 @@ title_VM.prototype.send_title = function(){
   var title_sentence = document.forms.title_form.event_title_input.value;
 
   var Game = Parse.Object.extend("Game");
-  var game_object = new Game();
-  game_object.set("motion", title_sentence);
-  game_object.save(null, {
-    success: function(game_obj) {
-      
-      var title = game_obj.get("motion");
-      self.title_sentence(title);
-	  self.title_show(true);
-	  self.title_input(false);
+  var game_query = new Parse.Query(Game);
+  game_query.get(self.game_id,{
+  	success: function(game_obj){
 
-    },error: function(myObject, error) {
-      console.log(error)
-    }
+  		game_obj.set("motion", title_sentence);
+  		game_obj.save(null, {
+	      success: function(game_obj) { 
+	        var title = game_obj.get("motion");
+	        self.title_sentence(title);
+		    self.title_show(true);
+		    self.title_input(false);
+	      },error: function(myObject, error) {
+	        console.log(error)
+	      }
+	    });
+
+  	},
+  	error: function(myObject, error){
+  		console.log(error);
+  	}
   });
+
+
 
 
 }

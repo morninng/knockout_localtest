@@ -1,16 +1,18 @@
 
-function AppMgr() {
+function AppMgr(in_game_id, in_own_parse_id ) {
   	var self = this;
-	self.own_parse_id="XXXX";
-	self.game_id="YYYYY";
-	self.own_hangoutid = "hangout_XXX2";
+	self.own_parse_id=in_own_parse_id;
+	self.game_id=in_game_id;
+	self.own_hangoutid = "";
 	self.game_obj = new Object();
 	self.game_status = 0;
 }
 
-AppMgr.prototype.initialize = function(in_game_obj){
+AppMgr.prototype.initialize = function(in_game_obj, in_own_hangout_id){
 
   	var self = this;
+
+	self.own_hangoutid = in_own_hangout_id;
 	self.participant_manager_object = new ParticipantMgr();
 
 	// hangout statusで受け取るJSONコード
@@ -107,7 +109,7 @@ AppMgr.prototype.initialize = function(in_game_obj){
     title_view_model = new title_VM();
     var title_el = document.getElementById('title_template_area');
     ko.applyBindings(title_view_model, title_el);
-    title_view_model.initialize(self.game_id);
+    title_view_model.initialize(self.game_id, self.game_obj);
 
 }
 
