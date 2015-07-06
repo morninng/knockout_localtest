@@ -54,7 +54,7 @@ VideoViewModel.prototype.update_speaker = function(hangout_speech_status, own_ha
   if(self.current_speaker != hangout_id){
     self.timer = setInterval( function(){self.countTimer()},1000)
   }
-  
+
 }
 
  VideoViewModel.prototype.countTimer = function(){
@@ -82,7 +82,7 @@ VideoViewModel.prototype.update_speaker = function(hangout_speech_status, own_ha
     var role_name = speaker_obj.role;
     var name = appmgr.participant_manager_object.getName_fromHangoutID(hangout_id);
     var pict_src = appmgr.participant_manager_object.getPictSrc_fromHangoutID(hangout_id);
-
+    role_name  = role_name + ":   ";
     self.speech_visible(true);
     self.speech_role(role_name); 
     self.speaker_name(name); 

@@ -97,10 +97,14 @@
 
 <script type="text/template" data-template="video_area_template">
 
-  <div id="speach_role_timer" data-bind="visible: speech_visible" style="display:none">a</div>
-  <div data-bind="text:speech_role" style="float:left"></div>
-  <div data-bind="text:speaker_name" style="float:left"></div>
-  <div data-bind="text:speech_time" style="float:right"></div>
+  <div id="speach_role_timer" data-bind="visible: speech_visible" style="display:none">
+    <p>
+      <strong><span data-bind="text:speech_role" style="float:left"></span></strong> &nbsp;
+      <span data-bind="text:speaker_name" style="float:left"></span>
+    </p>
+    <div data-bind="text:speech_time" style="float:right"></div>
+  </div>
+  
   <div data-bind="visible: normal_buttons">
 	<button data-bind="visible: complete_speech_button, event:{click:click_complete_speech}">Complete Speech</button>
 	<button data-bind="visible: poi_button, event:{click:click_poi}"> Poi</button>
