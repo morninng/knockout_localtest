@@ -236,7 +236,6 @@ ParticipantMgr.prototype.isYourPartner = function(hangout_id){
 ParticipantMgr.prototype.isAudience_yourself = function(){
 
 	var self = this;
-
 	for(var i=0; i< self.audience_obj_array.length; i++){
 	  if(self.audience_obj_array[i].parse_id == self.own_parse_id){
 	    return true;
@@ -247,7 +246,6 @@ ParticipantMgr.prototype.isAudience_yourself = function(){
 
 
 ParticipantMgr.prototype.isDebater_yourself = function(){	
-
 
 	var self = this;
 
