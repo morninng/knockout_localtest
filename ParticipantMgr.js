@@ -372,11 +372,12 @@ ParticipantMgr.prototype.is_OwnRole = function(in_role_name){
 
 	var self = this;
 	var my_role_array = self.get_own_role_array();
-	var my_role = my_role_array[0];
 
-    if(in_role_name == my_role){
-    	return true;
-    }
+	for(var i=0; i< my_role_array.length; i++){
+		if(my_role_array[i] == in_role_name){
+			return true;
+		}
+	}
     return false;
 }
 

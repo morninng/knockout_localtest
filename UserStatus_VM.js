@@ -6,15 +6,17 @@ function user_status_VM(role_name){
   self.user_name = ko.observable("no applicant");
   self.pict_src = ko.observable("./picture/1.jpg");
   self.user_status_css = ko.observable("notapplicant");
-  self.parse_id = ko.observable(null);
+  self.parse_id_of_this_role = ko.observable(null);
   self.enable_change = ko.observable(true);
+
+  self.own_parse_id = appmgr.own_parse_id;
+  self.game_id = appmgr.game_id;
 
   self.decline_visible = ko.observable(false);
   self.join_visible = ko.observable(false);
   self.cancel_visible = ko.observable(false);
   
 }
-
 
 user_status_VM.prototype.update_user_status = function(){
 
@@ -34,9 +36,9 @@ user_status_VM.prototype.update_user_info = function(role_name){
 		self.role(show_role_name);
 	}
 
-	var parse_id = appmgr.participant_manager_object.getParseID_fromRole(role_name);
-	self.parse_id(parse_id);
-	if(parse_id == null){
+	var parse_id_of_this_role = appmgr.participant_manager_object.getParseID_fromRole(role_name);
+	self.parse_id_of_this_role(parse_id_of_this_role);
+	if(parse_id_of_this_role == null){
 		return ;
 	}
 
@@ -65,7 +67,7 @@ user_status_VM.prototype.update_user_login_status = function(role_name){
 
 user_status_VM.prototype.update_button_status = function(role_name){
 	var self = this;
-	var parse_id = appmgr.participant_manager_object.getParseID_fromRole(role_name);
+	var parse_id_of_this_role = appmgr.participant_manager_object.getParseID_fromRole(role_name);
 	var is_login = appmgr.participant_manager_object.is_Login(role_name);
 	var is_own_group = appmgr.participant_manager_object.is_OwnGroup(role_name);
 	var is_my_role = appmgr.participant_manager_object.is_OwnRole(role_name);
@@ -78,7 +80,7 @@ user_status_VM.prototype.update_button_status = function(role_name){
       self.decline_visible(false);
 
 	}else{
-		if(parse_id){
+		if(parse_id_of_this_role){
 			if(is_login){
 				if(is_my_role){
 					self.cancel_visible(true);
@@ -154,30 +156,112 @@ var convert_table = {
 }
 
 
-user_status_VM.prototype.decline = function(data, event){
+user_status_VM.prototype.decline = function(){
   
 	var self = this;
-	console.log(data.parse_id());
-	self.set_login_status("logout");
+	var Game = Parse.Object.extend("Game");
+	var game_query = new Parse.Query(Game);
+	game_query.get(self.game_id , {
+	  success: function(game_obj) {
+	  	participant_obj = game_obj.get("participant_role");
+	  	delete participant_obj[self.role_name];
+	  	game_obj.set("participant_role",participant_obj);
+	  	var is_debater_exist = false;
+	  	var parse_id_ofThisRole = self.parse_id_of_this_role();
+	  	for( key in participant_obj){
+	  		if(participant_obj[key] == parse_id_ofThisRole){
+	  			is_debater_exist = true;
+	  		}
+	  	}
+  	  	if(!is_debater_exist){	
+	  		var audience_array = game_obj.get("audience_participants");
+	  		audience_array.push(parse_id_ofThisRole);
+	  		game_obj.set("audience_participants",audience_array);
+	  	}
+	  	game_obj.save(null, {
+		  success: function(obj) {
+		    console.log(obj);
+		  },
+		  error: function(obj, error) {
+		    alert('Failed to save object.' + error.message);
+		  }
+		});
+	  },
+	  error: function(object, error) {
+	    alert('Failed to save object.' + error.message);
+	  }
+	});
 }
 
-user_status_VM.prototype.join = function(data, event){
+user_status_VM.prototype.join = function(){
 
 	var self = this;
-	// Parse_Cloud.join(own_parse_id, role_name, game_id);
-	console.log(data.enable_change());
-	self.set_login_status("no_applicant");
+
+	var Game = Parse.Object.extend("Game");
+	var game_query = new Parse.Query(Game);
+	game_query.get(self.game_id , {
+	  success: function(game_obj) {
+
+	  	participant_obj = game_obj.get("participant_role");
+	  	participant_obj[self.role_name] = self.own_parse_id;
+
+	  	audience_array = game_obj.get("audience_participants");
+	  	for(var i=0; i< audience_array.length; i++){
+	  		if(audience_array[i] == self.own_parse_id){
+	  			audience_array = audience_array.splice(i+1,1);
+	  		}
+	  	}
+	  	game_obj.set("participant_role",participant_obj);
+	  	game_obj.set("audience_participants",audience_array);
+	  	game_obj.save(null, {
+		  success: function(obj) {
+		    console.log(obj);
+		  },
+		  error: function(obj, error) {
+		    alert('Failed to save object.' + error.message);
+		  }
+		});
+	  },
+	  error: function(object, error) {
+	    alert('Failed to save object.' + error.message);
+	  }
+	});
 }
 
 user_status_VM.prototype.cancel = function(){
-	/*
-	var isAudience = appmgr.participant_manager_object.is_Audience(self.role_name);
-	if(isAudience){
-		self.cancel_audience_from_hangout();
-	}else{
-		self.cancel_debater_from_hangout();
-	}
-	*/
+
+	var self = this;
+	var Game = Parse.Object.extend("Game");
+	var game_query = new Parse.Query(Game);
+	game_query.get(self.game_id , {
+	  success: function(game_obj) {
+	  	participant_obj = game_obj.get("participant_role");
+	  	delete participant_obj[self.role_name];
+	  	game_obj.set("participant_role",participant_obj);
+	  	var is_debater_exist = false;
+	  	for( key in participant_obj){
+	  		if(participant_obj[key] == self.own_parse_id){
+	  			is_debater_exist = true;
+	  		}
+	  	}
+	  	if(!is_debater_exist){	
+	  		audience_array = game_obj.get("audience_participants");
+	  		audience_array.push(self.own_parse_id);
+	  		game_obj.set("audience_participants",audience_array);
+	  	}
+	  	game_obj.save(null, {
+		  success: function(obj) {
+		    console.log(obj);
+		  },
+		  error: function(obj, error) {
+		    alert('Failed to save object.' + error.message);
+		  }
+		});
+	  },
+	  error: function(object, error) {
+	    alert('Failed to save object.' + error.message);
+	  }
+	});
 }
 
 

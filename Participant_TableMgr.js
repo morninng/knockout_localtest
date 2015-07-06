@@ -71,8 +71,8 @@ ParticipantTableMgr.prototype.create_rolename_array = function(game_style){
 	var audience_role_array = audience_role_array_full.slice(0,number_audience);
 	var audience_container_array = audience_container_array_full.slice(0,number_audience);
 
-	self.role_array.push(audience_role_array);
-	self.container_array.push(audience_container_array);
+	self.role_array = self.role_array.concat(audience_role_array);
+	self.container_array = self.container_array.concat(audience_container_array);
 
 }
 
