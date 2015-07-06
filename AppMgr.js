@@ -17,8 +17,8 @@ AppMgr.prototype.initialize = function(in_game_obj, in_own_hangout_id){
 
 	// hangout statusで受け取るJSONコード
 	var parse_hangout_mapping = [
-		         {parse_id:"tnsjqJOaJk", hangout_id:"hangout_XXX1"},
-		         {parse_id:"37mnmciaGV", hangout_id:"hangout_XXX2"},
+		         {parse_id:"37mnmciaGV", hangout_id:"hangout_XXX1"},
+		         {parse_id:"YYYY", hangout_id:"hangout_XXX2"},
 		         {parse_id:"tQDJHWFq27", hangout_id:"hangout_XXX3"},
 		         {parse_id:"XXXX", hangout_id:"ZZZZZ"},
 		         {parse_id:"6ZMl4LGKim", hangout_id:"hangout_XXX4"}
@@ -27,6 +27,7 @@ AppMgr.prototype.initialize = function(in_game_obj, in_own_hangout_id){
 	self.participant_manager_object.set_parseid_hangoutid_mapping(parse_hangout_mapping );
 
 	self.game_obj = in_game_obj;
+	
 /*
 	self.game_obj = {
 	game_style:"NorthAmerica",
@@ -75,7 +76,7 @@ AppMgr.prototype.initialize = function(in_game_obj, in_own_hangout_id){
 
 	var hangout_speech_status = {
 		poi_speaker: null,
-		speaker: null,
+		speaker: {hangout_id :"hangout_XXX1", role : "PrimeMinister"},
 		poi_candidate: ["hangout_XXX1"]
 	}
 

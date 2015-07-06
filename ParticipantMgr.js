@@ -4,7 +4,7 @@ function ParticipantMgr(){
 	var self = this;
 	self.debater_obj_array = new Array();
 	self.audience_obj_array = new Array();
-	self.game_style = null
+	self.game_style = null;
 	self.own_parse_id = null;
 	self.own_hangout_id = null;
 	self.parse_hangout_idmapping_array = new Object();

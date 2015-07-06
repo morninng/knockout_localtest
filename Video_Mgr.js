@@ -22,6 +22,8 @@
   self.current_speaker = null;
   self.own_hangout_id = null;
 
+  self.speech_duration = 0;
+
  }
 
 VideoViewModel.prototype.update_speaker = function(hangout_speech_status, own_hangoutid){
@@ -36,13 +38,41 @@ VideoViewModel.prototype.update_speaker = function(hangout_speech_status, own_ha
     self.show_Speaker(poi_speaker_obj, "poi");
     self.poi_candidate_view_array().splice(0, self.poi_candidate_view_array.length);
   }else if (speaker_obj){
+    self.StartTimer( speaker_obj.hangout_id );
     self.show_Speaker(speaker_obj, "speaker");
   }else{
     self.show_Speaker(null, "discussion");
+    self.StopTimer();
     self.show_start_speech_button();
   }
-
 }
+
+
+ VideoViewModel.prototype.StartTimer = function(hangout_id){
+
+  var self = this;
+  if(self.current_speaker != hangout_id){
+    self.timer = setInterval( function(){self.countTimer()},1000)
+  }
+  
+}
+
+ VideoViewModel.prototype.countTimer = function(){
+
+  var self = this;
+  self.speech_duration++;
+  var duration_mod = self.speech_duration % 60;
+  var minutes = (self.speech_duration - duration_mod)/60;
+  var second = duration_mod;
+  var timer_msg = "time spent:   " + minutes + "min " + second + "sec";
+  self.speech_time(timer_msg);
+ }
+
+ VideoViewModel.prototype.StopTimer = function(){
+    self.speech_duration = 0;
+    self.speech_time("");
+    clearInterval(self.timer);
+ }
 
  VideoViewModel.prototype.show_Speaker = function(speaker_obj, status){
   var self = this;
@@ -58,11 +88,10 @@ VideoViewModel.prototype.update_speaker = function(hangout_speech_status, own_ha
     self.speaker_name(name); 
     self.speech_time("test");
     self.current_speaker = hangout_id;
-    self.start_speech();
+ //   self.start_speech();
   }else{
     // discussion mode  
   }
-
  }
 
  VideoViewModel.prototype.show_start_speech_button = function(){
