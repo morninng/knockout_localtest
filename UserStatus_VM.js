@@ -111,47 +111,10 @@ user_status_VM.prototype.update_button_status = function(role_name){
 				}
 			}
 		}
-
-
 	}
-
-
-/*
-	if(parse_id){
-      if(is_login){
-      	if(is_my_role){
-          self.cancel_visible(true);
-          self.join_visible(false);
-          self.decline_visible(false);
-      	}else{
-          self.cancel_visible(false);
-          self.join_visible(false);
-          self.decline_visible(false);
-      	}
-      }else{
-          self.cancel_visible(false);
-          self.join_visible(false);
-          self.decline_visible(true);
-	  }
-	}else{
-      if(is_own_group){
-      	  if(is_audience){
-            self.cancel_visible(false);
-            self.join_visible(false);
-            self.decline_visible(false);
-          }else{
-            self.cancel_visible(false);
-            self.join_visible(true);
-            self.decline_visible(false);
-          }
-      }else{
-          self.cancel_visible(false);
-          self.join_visible(false);
-          self.decline_visible(false);
-      }
-    }
-    */
 }
+
+
 
 user_status_VM.prototype.update_button_byGamestatus = function(){
 
