@@ -91,14 +91,15 @@ VideoViewModel.prototype.update_speaker = function(hangout_speech_status, own_ha
       self.speech_role(role_name);   
     }
     self.speaker_name(name); 
-    self.speech_time("test");
+    self.speech_time();
     self.current_speaker = hangout_id;
  //   self.start_speech();
   }else{
     // discussion mode  
     self.speech_visible(true);
     self.speech_role("under discussion: "); 
-    self.speaker_name(" anyone can talk")
+    self.speaker_name(" anyone can talk");
+    self.speech_time();
   }
  }
 
