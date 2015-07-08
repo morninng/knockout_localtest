@@ -75,9 +75,12 @@ AppMgr.prototype.initialize = function(in_game_obj, in_own_hangout_id){
 	}*/
 
 	var hangout_speech_status = {
+	//	poi_speaker: {hangout_id :"hangout_XXX4", role : "LeaderOpposition"},
 		poi_speaker: null,
-		speaker: {hangout_id :"hangout_XXX1", role : "PrimeMinister"},
-		poi_candidate: ["hangout_XXX1"]
+	//	speaker: {hangout_id :"hangout_XXX4", role : "PrimeMinister"},
+		speaker: null,
+		 poi_candidate: ["hangout_XXX1","hangout_XXX3"]
+		// poi_candidate: null
 	}
 
 	self.video_view_model.update_speaker(hangout_speech_status, self.own_hangoutid);

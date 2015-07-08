@@ -121,12 +121,13 @@
 	  </li>
 	</ul> 
   </div>
-  <div data-bind="visible: poi_candidate_visible" style="clear:both">
+  <div data-bind="visible: poi_candidate_visible" style="clear:both; border: 1px solid #0000FF;">
+    <strong>poi candidate</strong>
 	<ul data-bind="foreach: poi_candidate_view_array"　style="list-style:none;">
 	  <li >
-	   <div style="padding:2px; border: 1px solid #0000FF;">
+	   <div style="padding:2px; border: 1px solid #00FF00; margin:4px;">
 	      <div class="profile_container" style="float:left">
-	     	 <img style="float:left; max-width:50px" data-bind="attr: {src: img_url}">
+	     	 <img style="float:left; max-height:30px" data-bind="attr: {src: img_url}">
 	   　 	 <div style="float:left" data-bind = "text:name" ></div>
 	      </div>
 		  <button data-bind="visible: PoiTake_button_visible, click:$parent.take_poi" style = "display:none; float:left"> take poi</button>

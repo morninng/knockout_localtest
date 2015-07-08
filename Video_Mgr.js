@@ -69,12 +69,13 @@ VideoViewModel.prototype.update_speaker = function(hangout_speech_status, own_ha
  }
 
  VideoViewModel.prototype.StopTimer = function(){
+    var self = this;
     self.speech_duration = 0;
     self.speech_time("");
     clearInterval(self.timer);
  }
 
- VideoViewModel.prototype.show_Speaker = function(speaker_obj, status){
+ VideoViewModel.prototype.show_Speaker = function(speaker_obj, type){
   var self = this;
 
   if(speaker_obj){
@@ -84,13 +85,20 @@ VideoViewModel.prototype.update_speaker = function(hangout_speech_status, own_ha
     var pict_src = appmgr.participant_manager_object.getPictSrc_fromHangoutID(hangout_id);
     role_name  = role_name + ":   ";
     self.speech_visible(true);
-    self.speech_role(role_name); 
+    if(type=="poi"){
+      self.speech_role("poi: "); 
+    }else{
+      self.speech_role(role_name);   
+    }
     self.speaker_name(name); 
     self.speech_time("test");
     self.current_speaker = hangout_id;
  //   self.start_speech();
   }else{
     // discussion mode  
+    self.speech_visible(true);
+    self.speech_role("under discussion: "); 
+    self.speaker_name(" anyone can talk")
   }
  }
 
@@ -118,22 +126,22 @@ VideoViewModel.prototype.update_poi_candidate = function(hangout_speech_status, 
   var next_candidate_array = hangout_speech_status.poi_candidate; 
   var current_poi_candidate_array = self.poi_candidate_view_array()
 
-  var new_poi_candidate_array = _.difference(next_candidate_array, current_poi_candidate_array);
-  var remove_poi_candidate_array = _.difference(current_poi_candidate_array, next_candidate_array);
 
-  for(var i=0; i<new_poi_candidate_array.length; i++){
-    self.add_candidate(new_poi_candidate_array[i]);
+  if( !next_candidate_array || next_candidate_array.length==0){
+    self.poi_candidate_visible(false);
+    self.poi_candidate_view_array();
+  }else{
+    var new_poi_candidate_array = _.difference(next_candidate_array, current_poi_candidate_array);
+    var remove_poi_candidate_array = _.difference(current_poi_candidate_array, next_candidate_array);
+    for(var i=0; i<new_poi_candidate_array.length; i++){
+      self.add_candidate(new_poi_candidate_array[i]);
+    }
+    for(var i=0; i<remove_poi_candidate_array.length; i++){
+      self.remove_candidate(remove_poi_candidate_array[i]);
+    }
   }
-
-  for(var i=0; i<remove_poi_candidate_array.length; i++){
-    self.remove_candidate(remove_poi_candidate_array[i]);
-  }
-
-
 }
 
-
- 
 
  VideoViewModel.prototype.add_candidate = function( in_hangout_id){
 
@@ -148,8 +156,9 @@ VideoViewModel.prototype.update_poi_candidate = function(hangout_speech_status, 
   if(in_hangout_id == self.own_hangout_id){
     poi_cancel_visible = true;
   }
+
+
   self.poi_candidate_view_array.push({img_url:pict_src, name:name,PoiTake_button_visible:poi_take_visible, cancel_button_visible:poi_cancel_visible, hangout_id: in_hangout_id});
- 
  }
 
 
