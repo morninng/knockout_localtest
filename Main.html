@@ -105,7 +105,7 @@
     <div data-bind="text:speech_time" style="float:right"></div>
   </div>
   
-  <div data-bind="visible: normal_buttons">
+  <div data-bind="visible: normal_buttons" style="clear:both">
 	<button data-bind="visible: complete_speech_button, event:{click:click_complete_speech}">Complete Speech</button>
 	<button data-bind="visible: poi_button, event:{click:click_poi}"> Poi</button>
 	<button data-bind="visible: finish_poi_button, event:{click:finish_poi}">Finish Poi</button>
@@ -121,16 +121,17 @@
 	  </li>
 	</ul> 
   </div>
-  <div data-bind="visible: poi_candidate_visible">
-	<ul data-bind="foreach: poi_candidate_view_array"　style="list-style-type:none;">
-	  <li style="clear:left">
-	   <div style="padding:2px">
+  <div data-bind="visible: poi_candidate_visible" style="clear:both">
+	<ul data-bind="foreach: poi_candidate_view_array"　style="list-style:none;">
+	  <li >
+	   <div style="padding:2px; border: 1px solid #0000FF;">
 	      <div class="profile_container" style="float:left">
 	     	 <img style="float:left; max-width:50px" data-bind="attr: {src: img_url}">
 	   　 	 <div style="float:left" data-bind = "text:name" ></div>
 	      </div>
 		  <button data-bind="visible: PoiTake_button_visible, click:$parent.take_poi" style = "display:none; float:left"> take poi</button>
-	   　   <button data-bind="visible: cancel_button_visible" style = "display:none; float:left">cancel poi</button> 
+	   　  <button data-bind="visible: cancel_button_visible" style = "display:none; float:left">cancel poi</button> 
+	   	  <div style="clear: both;"></div>
 	   </div>
 	  </li>
 	</ul>
