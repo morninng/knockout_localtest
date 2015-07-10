@@ -208,7 +208,7 @@ user_status_VM.prototype.join = function(){
 
 	  	participant_obj = game_obj.get("participant_role");
 	  	if(participant_obj[self.role_name]){
-	  		alert("this role has been already assigned to others");
+	  		alert("this role has been already assigned to others")
 	  		return;
 	  	}
 	  	participant_obj[self.role_name] = self.own_parse_id;

@@ -3,7 +3,8 @@
 <head>
 	 <meta charset="utf-8">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="./Debate.css">
+	<link rel="stylesheet" href="./style/loading.css">
+	<link rel="stylesheet" href="./style/Debate.css">
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
@@ -52,6 +53,7 @@
           <button data-bind = "visible: join_visible, event:{click:join}">join</button>
           <button data-bind = "visible: cancel_visible, event:{click:cancel}">cancel</button>
         </div>
+        <div style="clear:both" class='loader' align="center" data-bind = "visible:loading_visible"> Loading </div>
      </div>
 </script>
 
